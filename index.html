@@ -8,6 +8,7 @@
 
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
+        
         body {
             font-family: 'Quicksand', sans-serif;
             min-height: 100vh;
@@ -19,105 +20,138 @@
             overflow: hidden;
         }
 
-        .main-container { width: 90%; max-width: 500px; position: relative; z-index: 20; }
+        /* --- FONDO DE CORAZONES (SIEMPRE ACTIVO) --- */
+        #hearts-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .heart {
+            position: absolute;
+            top: -50px;
+            animation: fall linear infinite;
+        }
+
+        @keyframes fall {
+            to { transform: translateY(110vh) translateX(40px); opacity: 0; }
+        }
+
+        /* --- CONTENEDOR DE CONTENIDO --- */
+        .main-container {
+            width: 90%;
+            max-width: 500px;
+            position: relative;
+            z-index: 10;
+        }
 
         /* VISTA 1: TARTA */
         #cake-section {
-            background: #fff0f5; padding: 30px; border-radius: 30px;
-            text-align: center; display: flex; flex-direction: column; align-items: center;
+            background: #fff0f5;
+            padding: 30px;
+            border-radius: 30px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
             box-shadow: 0 10px 30px rgba(244, 143, 177, 0.4);
+            transition: opacity 1.5s ease, transform 1.5s ease;
         }
-        .bday-banner { background: #f48fb1; color: white; padding: 10px 25px; border-radius: 12px; font-weight: bold; margin-bottom: 15px; }
+
+        .bday-banner {
+            background: #f48fb1;
+            color: white;
+            padding: 10px 25px;
+            border-radius: 12px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
         .cake-image { width: 250px; border-radius: 15px; }
         .wish-text { font-family: 'Pacifico', cursive; color: #880e4f; font-size: 20px; margin-top: 10px; }
 
         /* VISTA 2: CARTA */
-        #letter-section { display: none; width: 100%; }
+        #letter-section {
+            display: none;
+            opacity: 0;
+            transform: scale(0.9);
+            transition: opacity 1.5s ease, transform 1.5s ease;
+        }
+
         .letter-paper {
-            background-color: #fffde7; border-radius: 20px; padding: 30px;
-            border: 5px solid #f48fb1; color: #3e2723;
+            background-color: #fffde7;
+            border-radius: 20px;
+            padding: 30px;
+            border: 5px solid #f48fb1;
+            color: #3e2723;
             box-shadow: 0 10px 40px rgba(0,0,0,0.8);
         }
+
         .letter-content h1 { color: #b71c1c; text-align: center; margin-bottom: 20px; }
         .letter-content p { margin-bottom: 15px; line-height: 1.6; font-size: 17px; }
-        .final-message { font-weight: bold; text-align: center; color: #880e4f; margin-top: 20px; font-size: 22px; opacity: 0; transition: 2s; }
 
-        /* LLUVIA DE CORAZONES */
-        #hearts-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 5; pointer-events: none; }
-        .heart { position: absolute; top: -50px; animation: fall linear infinite; }
-        @keyframes fall { to { transform: translateY(110vh) translateX(30px); opacity: 0; } }
-
-        /* --- NUEVO BOTÓN CON INDICADOR --- */
-        #music-btn-container {
-            position: fixed;
-            bottom: 30px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 10px;
-            z-index: 1000;
+        .final-message {
+            font-weight: bold;
+            text-align: center;
+            color: #880e4f;
+            margin-top: 20px;
+            font-size: 22px;
+            opacity: 0;
+            transition: opacity 2s ease;
         }
 
+        /* BOTÓN DE MÚSICA */
         #music-btn {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
             background: #f48fb1;
             color: white;
-            padding: 15px 25px;
-            border-radius: 50px;
-            font-weight: bold;
-            cursor: pointer;
-            border: 3px solid white;
-            box-shadow: 0 5px 20px rgba(244, 143, 177, 0.6);
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
             display: flex;
+            justify-content: center;
             align-items: center;
-            gap: 10px;
-            transition: 0.3s;
+            cursor: pointer;
+            font-size: 28px;
+            z-index: 100;
+            border: 3px solid white;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
         }
 
-        /* Las barritas de sonido */
-        .bars { display: none; align-items: center; gap: 3px; height: 20px; }
-        .bar { width: 3px; background: white; animation: bounce 0.5s infinite alternate; }
-        .bar:nth-child(2) { animation-delay: 0.2s; }
-        .bar:nth-child(3) { animation-delay: 0.4s; }
-
-        @keyframes bounce { from { height: 5px; } to { height: 20px; } }
-
-        .fade-out { opacity: 0; transition: opacity 1s ease; }
+        /* CLASES DE ANIMACIÓN */
+        .visible { display: block !important; opacity: 1 !important; transform: scale(1) !important; }
+        .hidden { opacity: 0 !important; transform: scale(1.1) !important; pointer-events: none; }
     </style>
 </head>
 <body>
 
-    <div id="music-btn-container">
-        <button id="music-btn" onclick="toggleMusica()">
-            <span id="icon">🎵</span>
-            <span id="btn-text">PONER MÚSICA DEL REINO</span>
-            <div class="bars" id="visualizer">
-                <div class="bar"></div>
-                <div class="bar"></div>
-                <div class="bar"></div>
-            </div>
-        </button>
-    </div>
-
-    <audio id="audio-reino" loop preload="auto">
-        <source src="https://www.chosic.com/wp-content/uploads/2021/04/Ancient-Rite.mp3" type="audio/mpeg">
-    </audio>
-    
     <div id="hearts-container"></div>
+    <div id="music-btn" onclick="toggleMusic()">🎵</div>
+
+    <audio id="bg-audio" loop>
+        <source src="https://www.chosic.com/wp-content/uploads/2021/07/The-Epic-Hero-Epic-Cinematic-Music.mp3" type="audio/mpeg">
+    </audio>
 
     <div class="main-container">
         <div id="cake-section">
             <div class="bday-banner">HAPPY BIRTHDAY!</div>
             <img src="cake.png" alt="Tarta" class="cake-image" onerror="this.src='https://cdn-icons-png.flaticon.com/512/3132/3132693.png'">
-            <p class="wish-text">¡Pide un deseo, Nachi! 🎂</p>
+            <p class="wish-text">¡Pide un deseo, mi rey! 🎂</p>
         </div>
 
         <div id="letter-section">
             <div class="letter-paper">
                 <div class="letter-content">
                     <h1>¡FELIZ CUMPLEAÑOS, MARTIN! 🎂🔥</h1>
-                    <p>¡Llegó tu día! Quería decirte frente a todos que me encanta el camino que estamos armando juntos. Mirar atrás y ver todo lo que hemos vivido es increíble.</p>
+                    <p>¡Llegó tu día! Quería decirte que me encanta el camino que estamos armando juntos. Mirar atrás y ver todo lo que hemos vivido es increíble.</p>
                     <p>Solo quiero recordarte que eres una persona maravillosa y que te quiero demasiado. Espero que hoy lo pases súper.</p>
-                    <p>¡Aquí voy a estar siempre para apoyar a mi rey en todo!</p>
+                    <p>¡De verdad espero que te vaya increíble en todo lo que venga, mi Nachi! Aquí voy a estar siempre para celebrar tus logros.</p>
                     <p id="te-amo" class="final-message">¡TE AMO MUCHO! ❤️😊✨</p>
                 </div>
             </div>
@@ -125,28 +159,59 @@
     </div>
 
     <script>
-        const audio = document.getElementById('audio-reino');
-        const btnText = document.getElementById('btn-text');
-        const visualizer = document.getElementById('visualizer');
-        const icon = document.getElementById('icon');
+        // 1. LLUVIA DE CORAZONES (Inicia de inmediato)
+        function crearCorazones() {
+            const container = document.getElementById('hearts-container');
+            const emojis = ['❤️', '💖', '💝', '💘'];
+            setInterval(() => {
+                const h = document.createElement('div');
+                h.className = 'heart';
+                h.innerHTML = emojis[Math.floor(Math.random() * emojis.length)];
+                h.style.left = Math.random() * 100 + 'vw';
+                h.style.animationDuration = (Math.random() * 2 + 3) + 's';
+                h.style.fontSize = (Math.random() * 10 + 20) + 'px';
+                h.style.opacity = Math.random();
+                container.appendChild(h);
+                setTimeout(() => h.remove(), 5000);
+            }, 300);
+        }
+        crearCorazones();
 
-        function toggleMusica() {
+        // 2. MÚSICA
+        const audio = document.getElementById('bg-audio');
+        const btn = document.getElementById('music-btn');
+
+        function toggleMusic() {
             if (audio.paused) {
                 audio.play();
-                btnText.innerText = "SONANDO...";
-                icon.innerText = "🔊";
-                visualizer.style.display = "flex";
-                document.getElementById('music-btn').style.background = "#4CAF50"; // Cambia a verde
+                btn.innerHTML = "🔊";
+                btn.style.background = "#4CAF50"; // Cambia a verde cuando suena
             } else {
                 audio.pause();
-                btnText.innerText = "PAUSADO";
-                icon.innerText = "🎵";
-                visualizer.style.display = "none";
-                document.getElementById('music-btn').style.background = "#f48fb1";
+                btn.innerHTML = "🎵";
+                btn.style.background = "#f48fb1";
             }
         }
 
-        // Lluvia
-        function crearLluvia() {
-            const container = document.getElementById('hearts-container');
-            const emojis = ['❤️', '💖',
+        // 3. TRANSICIÓN DE TARTA A CARTA
+        setTimeout(() => {
+            const cake = document.getElementById('cake-section');
+            const letter = document.getElementById('letter-section');
+            
+            // Ocultar tarta
+            cake.classList.add('hidden');
+            
+            setTimeout(() => {
+                cake.style.display = 'none';
+                // Mostrar carta
+                letter.classList.add('visible');
+                
+                // Mostrar "Te amo" al final
+                setTimeout(() => {
+                    document.getElementById('te-amo').style.opacity = '1';
+                }, 3000);
+            }, 1500); // Tiempo de la animación de salida
+        }, 5000); // 5 segundos viendo la tarta
+    </script>
+</body>
+</html>
