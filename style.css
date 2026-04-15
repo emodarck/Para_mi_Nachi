@@ -11,7 +11,7 @@ body {
     position: relative;
 }
 
-/* --- DISEÑO DEL EDITOR (idéntico a la imagen) --- */
+/* --- DISEÑO DEL EDITOR (Torta - Idéntico a tu imagen 3) --- */
 #editor-container {
     background-color: #1c1c1c;
     border-radius: 15px;
@@ -20,8 +20,16 @@ body {
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
     position: absolute;
     z-index: 2;
-    transform: perspective(1000px) rotateY(-10deg);
-    animation: fadeAndDisappear 5s forwards; /* Controla la animación de desaparición */
+    /* --- ANIMACIÓN DE APARICIÓN Y DESAPARICIÓN --- */
+    animation: editorSequence 8s forwards; /* Dura 8 segundos en total */
+}
+
+/* Animación: Aparece, se queda 5s, desaparece */
+@keyframes editorSequence {
+    0% { opacity: 0; transform: perspective(1000px) rotateY(-10deg) scale(0.8); visibility: visible; }
+    10% { opacity: 1; transform: perspective(1000px) rotateY(-10deg) scale(1); } /* Aparece rápido */
+    80% { opacity: 1; transform: perspective(1000px) rotateY(-10deg) scale(1); } /* Se mantiene visible */
+    100% { opacity: 0; transform: perspective(1000px) rotateY(-10deg) scale(0.8); visibility: hidden; } /* Desaparece */
 }
 
 .window-bar {
@@ -66,14 +74,14 @@ body {
     margin-right: 15px;
 }
 
-/* --- COLORES DEL CÓDIGO --- */
+/* --- COLORES DEL CÓDIGO (Idénticos a tu imagen 3) --- */
 .line-code .yellow-text { color: #d4e157; }
 .line-code .blue-text { color: #81d4fa; }
 .line-code .green-text { color: #9ccc65; }
 .line-code .pink-text { color: #c2185b; }
 .line-code .orange-text { color: #ffab40; }
 
-/* --- DISEÑO DE LA CARTA (con corazones) --- */
+/* --- DISEÑO DE LA CARTA (Idéntico a tu imagen 2, pero aparece después) --- */
 #letter-container {
     opacity: 0;
     visibility: hidden;
@@ -84,7 +92,13 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    animation: fadeInLetter 6s forwards 5s; /* Empieza cuando el editor desaparece */
+    /* --- ANIMACIÓN DE APARICIÓN DE LA CARTA --- */
+    animation: fadeInLetter 3s forwards 8s; /* Aparece después de 8s, cuando el editor se va */
+}
+
+@keyframes fadeInLetter {
+    0% { opacity: 0; visibility: hidden; }
+    100% { opacity: 1; visibility: visible; }
 }
 
 .letter {
@@ -136,7 +150,7 @@ body {
     width: 20px;
     height: 20px;
     background-color: #ff3366;
-    opacity: 0.1; /* Transparente para que no moleste */
+    opacity: 0.1; /* Transparente */
     transform: rotate(45deg);
     animation: heartFall 10s infinite;
 }
@@ -162,18 +176,6 @@ body {
 .heart:nth-child(6) { top: -10px; left: 20%; animation-delay: 6s; }
 .heart:nth-child(7) { top: -10px; left: 80%; animation-delay: 5s; }
 .heart:nth-child(8) { top: -10px; left: 40%; animation-delay: 7s; }
-
-/* --- ANIMACIONES --- */
-@keyframes fadeAndDisappear {
-    0% { opacity: 1; visibility: visible; }
-    80% { opacity: 1; transform: perspective(1000px) rotateY(-10deg) scale(1); }
-    100% { opacity: 0; visibility: hidden; transform: perspective(1000px) rotateY(-10deg) scale(0.8); }
-}
-
-@keyframes fadeInLetter {
-    0% { opacity: 0; visibility: hidden; }
-    100% { opacity: 1; visibility: visible; }
-}
 
 @keyframes heartFall {
     0% { transform: rotate(45deg) translateY(-20px); opacity: 0.1; }
