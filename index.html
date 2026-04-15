@@ -47,37 +47,59 @@
         .heart { position: absolute; top: -50px; animation: fall linear infinite; }
         @keyframes fall { to { transform: translateY(110vh) translateX(30px); opacity: 0; } }
 
-        /* BOTÓN DE MÚSICA REFORZADO */
-        #music-control {
+        /* --- NUEVO BOTÓN CON INDICADOR --- */
+        #music-btn-container {
             position: fixed;
             bottom: 30px;
-            left: 50%;
-            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            z-index: 1000;
+        }
+
+        #music-btn {
             background: #f48fb1;
             color: white;
-            padding: 15px 30px;
+            padding: 15px 25px;
             border-radius: 50px;
             font-weight: bold;
             cursor: pointer;
-            z-index: 1000;
             border: 3px solid white;
             box-shadow: 0 5px 20px rgba(244, 143, 177, 0.6);
             display: flex;
             align-items: center;
             gap: 10px;
+            transition: 0.3s;
         }
+
+        /* Las barritas de sonido */
+        .bars { display: none; align-items: center; gap: 3px; height: 20px; }
+        .bar { width: 3px; background: white; animation: bounce 0.5s infinite alternate; }
+        .bar:nth-child(2) { animation-delay: 0.2s; }
+        .bar:nth-child(3) { animation-delay: 0.4s; }
+
+        @keyframes bounce { from { height: 5px; } to { height: 20px; } }
 
         .fade-out { opacity: 0; transition: opacity 1s ease; }
     </style>
 </head>
 <body>
 
-    <div id="music-control" onclick="activarMusica()">
-        <span id="icon">🎵</span> <span id="text">Pulsar para la música</span>
+    <div id="music-btn-container">
+        <button id="music-btn" onclick="toggleMusica()">
+            <span id="icon">🎵</span>
+            <span id="btn-text">PONER MÚSICA DEL REINO</span>
+            <div class="bars" id="visualizer">
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
+            </div>
+        </button>
     </div>
 
-    <audio id="bg-music" loop>
-        <source src="https://www.chosic.com/wp-content/uploads/2021/07/The-Epic-Hero-Epic-Cinematic-Music.mp3" type="audio/mpeg">
+    <audio id="audio-reino" loop preload="auto">
+        <source src="https://www.chosic.com/wp-content/uploads/2021/04/Ancient-Rite.mp3" type="audio/mpeg">
     </audio>
     
     <div id="hearts-container"></div>
@@ -94,8 +116,8 @@
                 <div class="letter-content">
                     <h1>¡FELIZ CUMPLEAÑOS, MARTIN! 🎂🔥</h1>
                     <p>¡Llegó tu día! Quería decirte frente a todos que me encanta el camino que estamos armando juntos. Mirar atrás y ver todo lo que hemos vivido es increíble.</p>
-                    <p>Solo quiero recordarte que eres una persona maravillosa y que te quiero demasiado. Espero que hoy lo pases súper y que este nuevo año de vida venga puros éxitos.</p>
-                    <p>¡Aquí voy a estar siempre para celebrar tus logros y apoyarte en todas!</p>
+                    <p>Solo quiero recordarte que eres una persona maravillosa y que te quiero demasiado. Espero que hoy lo pases súper.</p>
+                    <p>¡Aquí voy a estar siempre para apoyar a mi rey en todo!</p>
                     <p id="te-amo" class="final-message">¡TE AMO MUCHO! ❤️😊✨</p>
                 </div>
             </div>
@@ -103,54 +125,28 @@
     </div>
 
     <script>
-        const music = document.getElementById('bg-music');
-        const control = document.getElementById('music-control');
+        const audio = document.getElementById('audio-reino');
+        const btnText = document.getElementById('btn-text');
+        const visualizer = document.getElementById('visualizer');
+        const icon = document.getElementById('icon');
 
-        function activarMusica() {
-            if (music.paused) {
-                music.play().then(() => {
-                    document.getElementById('text').innerText = "Música ON";
-                    document.getElementById('icon').innerText = "🔊";
-                    // Movemos el botón a la esquina para que no moleste
-                    control.style.bottom = "20px";
-                    control.style.left = "auto";
-                    control.style.right = "20px";
-                    control.style.transform = "none";
-                    control.style.padding = "10px 15px";
-                    document.getElementById('text').style.display = "none";
-                }).catch(e => alert("Toca de nuevo para activar el sonido"));
+        function toggleMusica() {
+            if (audio.paused) {
+                audio.play();
+                btnText.innerText = "SONANDO...";
+                icon.innerText = "🔊";
+                visualizer.style.display = "flex";
+                document.getElementById('music-btn').style.background = "#4CAF50"; // Cambia a verde
             } else {
-                music.pause();
-                document.getElementById('icon').innerText = "🎵";
+                audio.pause();
+                btnText.innerText = "PAUSADO";
+                icon.innerText = "🎵";
+                visualizer.style.display = "none";
+                document.getElementById('music-btn').style.background = "#f48fb1";
             }
         }
 
+        // Lluvia
         function crearLluvia() {
             const container = document.getElementById('hearts-container');
-            const emojis = ['❤️', '💖', '💝', '💘'];
-            setInterval(() => {
-                const h = document.createElement('div');
-                h.className = 'heart';
-                h.innerHTML = emojis[Math.floor(Math.random() * emojis.length)];
-                h.style.left = Math.random() * 100 + 'vw';
-                h.style.animationDuration = (Math.random() * 2 + 3) + 's';
-                h.style.fontSize = (Math.random() * 10 + 20) + 'px';
-                container.appendChild(h);
-                setTimeout(() => h.remove(), 5000);
-            }, 300);
-        }
-
-        setTimeout(() => {
-            const cake = document.getElementById('cake-section');
-            const letter = document.getElementById('letter-section');
-            cake.classList.add('fade-out');
-            setTimeout(() => {
-                cake.style.display = 'none';
-                letter.style.display = 'block';
-                crearLluvia();
-                setTimeout(() => { document.getElementById('te-amo').style.opacity = '1'; }, 3000);
-            }, 1000);
-        }, 5000);
-    </script>
-</body>
-</html>
+            const emojis = ['❤️', '💖',
