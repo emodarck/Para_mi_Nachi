@@ -1,203 +1,120 @@
-/* --- DISEÑO BASE Y FONDO --- */
 body {
     margin: 0;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #121212; /* Fondo oscuro original */
+    background-color: #121212; /* Tu fondo negro favorito */
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
     overflow: hidden;
+    font-family: 'Segoe UI', sans-serif;
+    color: white;
+}
+
+/* --- ANIMACIÓN INICIAL DE LA TORTA --- */
+#cake-visual {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    animation: fadeOut 1s forwards 4s; /* Desaparece tras 4 segundos */
+    z-index: 10;
+}
+
+.happy-birthday-banner {
+    background-color: #f48fb1;
+    color: white;
+    padding: 10px 30px;
+    border-radius: 10px;
+    font-size: 1.8em;
+    font-weight: bold;
+    margin-bottom: 30px;
+    box-shadow: 0 4px 10px rgba(244, 143, 177, 0.5);
+}
+
+.cake-body {
+    width: 200px;
+    height: 110px;
+    background-color: #f06292;
+    border-radius: 10px 10px 0 0;
     position: relative;
 }
 
-/* --- DISEÑO DEL EDITOR (Torta Visual Original) --- */
-#editor-container {
-    background-color: #1c1c1c; /* Fondo del editor original */
-    border-radius: 15px;
-    padding: 20px;
-    width: 600px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+.icing {
+    width: 200px;
+    height: 40px;
+    background-color: #fffde7;
+    border-radius: 10px 10px 15px 15px;
     position: absolute;
-    z-index: 2;
-    transform: perspective(1000px) rotateY(-10deg); /* Perspectiva original */
-    
-    /* ANIMACIÓN PARA QUE APAREZCA Y LUEGO SE VAYA */
-    animation: editorSequence 8s forwards; 
+    top: 0;
 }
 
-@keyframes editorSequence {
-    0% { opacity: 0; transform: perspective(1000px) rotateY(-10deg) scale(0.8); visibility: visible; }
-    10% { opacity: 1; transform: perspective(1000px) rotateY(-10deg) scale(1); } /* Aparece rápido */
-    80% { opacity: 1; transform: perspective(1000px) rotateY(-10deg) scale(1); } /* Se queda 5-6s */
-    100% { opacity: 0; transform: perspective(1000px) rotateY(-10deg) scale(0.8); visibility: hidden; } /* Se va */
-}
-
-/* Estilos de la barra de ventana originales */
-.window-bar {
+.candles-row {
+    position: absolute;
+    top: -25px;
+    width: 100%;
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
+    justify-content: space-around;
 }
 
-.window-buttons {
-    display: flex;
-    gap: 8px;
+.candle { width: 8px; height: 35px; background: #4a148c; position: relative; }
+.flame { width: 8px; height: 12px; background: orange; border-radius: 50%; position: absolute; top: -15px; box-shadow: 0 0 8px orange; animation: glow 0.5s infinite alternate; }
+
+@keyframes glow { from { opacity: 0.7; } to { opacity: 1; } }
+
+/* --- CONTENEDOR DEL EDITOR --- */
+#editor-container {
+    opacity: 0;
+    position: absolute;
+    animation: fadeIn 1s forwards 4.5s, fadeOut 1s forwards 8s;
 }
 
-.window-buttons span {
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-}
-
-.window-buttons .red { background-color: #ff5f56; }
-.window-buttons .yellow { background-color: #ffbd2e; }
-.window-buttons .green { background-color: #27c93f; }
-
-.file-name {
-    color: #a0a0a0;
-    font-family: monospace;
-    font-size: 14px;
-}
-
-/* Estilos de línea de código originales */
-.code-line {
-    display: flex;
-    font-family: monospace;
-    font-size: 16px;
-    color: #e0e0e0;
-    line-height: 1.5; /* Espaciado original */
-}
-
-.line-number {
-    width: 30px;
-    color: #6a6a6a;
-    text-align: right;
-    margin-right: 15px;
-}
-
-/* --- COLORES DEL CÓDIGO (Originales y Vivos) --- */
-.line-code .yellow-text { color: #d4e157; }
-.line-code .blue-text { color: #81d4fa; }
-.line-code .green-text { color: #9ccc65; }
-.line-code .pink-text { color: #c2185b; }
-.line-code .orange-text { color: #ffab40; }
-
-/* --- DISEÑO DE LA CARTA (Original) --- */
+/* --- TU CARTA CON FONDO NEGRO Y CORAZONES --- */
 #letter-container {
     opacity: 0;
     visibility: hidden;
     position: absolute;
-    z-index: 1;
+    animation: fadeIn 2s forwards 8.5s;
     width: 100%;
     height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
-    
-    /* ANIMACIÓN PARA QUE APAREZCA DESPUÉS DEL EDITOR */
-    animation: fadeInLetter 3s forwards 8s; 
 }
 
-@keyframes fadeInLetter {
-    0% { opacity: 0; visibility: hidden; }
-    100% { opacity: 1; visibility: visible; }
-}
-
-/* Diseño de la carta blanca original */
 .letter {
-    background-color: #fff;
-    color: #333;
-    width: 90%;
-    max-width: 700px;
-    padding: 50px;
+    background: white;
+    padding: 30px;
     border-radius: 20px;
-    box-shadow: 0 15px 50px rgba(0, 0, 0, 0.3);
-    border: 5px solid #ffccdd; /* Borde rosa original */
+    color: #333;
+    max-width: 500px;
     text-align: center;
-    position: relative;
-    z-index: 3;
+    border: 4px solid #f06292;
+    z-index: 5;
 }
 
-/* Estilos de texto de la carta originales */
-.letter h1 {
-    color: #c2185b;
-    margin-top: 0;
-    font-size: 2.2em;
-    font-weight: 700;
-}
+.letter h1 { color: #c2185b; font-size: 1.6em; }
+.final-message { color: #c2185b; font-weight: bold; font-size: 1.2em; }
 
-.letter p {
-    font-size: 1.1em;
-    line-height: 1.6;
-    margin-bottom: 1.2em;
-}
-
-.letter .final-message {
-    font-weight: bold;
-    font-size: 1.3em;
-    margin-top: 1.5em;
-    color: #c2185b;
-}
-
-/* --- FONDO DE CORAZONES (Original y Arreglado) --- */
-.hearts {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-    overflow: hidden;
-}
-
+/* --- LLUVIA DE CORAZONES --- */
+.hearts { position: absolute; width: 100%; height: 100%; }
 .heart {
     position: absolute;
-    width: 20px;
-    height: 20px;
-    background-color: #ff3366;
-    opacity: 0.1; /* Transparencia original */
+    width: 15px; height: 15px;
+    background: #880e4f; /* Color de tus corazones oscuros */
     transform: rotate(45deg);
-    
-    /* ANIMACIÓN PARA QUE CAIGAN */
-    animation: heartFall 10s infinite;
+    animation: fall 6s infinite linear;
 }
+.heart::before, .heart::after { content: ''; width: 15px; height: 15px; background: #880e4f; border-radius: 50%; position: absolute; }
+.heart::before { top: -8px; left: 0; }
+.heart::after { left: -8px; top: 0; }
 
-.heart::before, .heart::after {
-    content: '';
-    position: absolute;
-    width: 20px;
-    height: 20px;
-    background-color: #ff3366;
-    border-radius: 50%;
-}
+@keyframes fall { 0% { top: -10%; opacity: 0; } 50% { opacity: 0.6; } 100% { top: 110%; opacity: 0; } }
+@keyframes fadeIn { to { opacity: 1; visibility: visible; } }
+@keyframes fadeOut { to { opacity: 0; visibility: hidden; } }
 
-.heart::before { top: -10px; left: 0; }
-.heart::after { left: -10px; top: 0; }
-
-/* Posicionamiento aleatorio de MUCHOS corazones */
-.h1 { top: -10px; left: 10%; animation-delay: 0s; }
-.h2 { top: -10px; left: 20%; animation-delay: 2s; }
-.h3 { top: -10px; left: 30%; animation-delay: 4s; }
-.h4 { top: -10px; left: 40%; animation-delay: 6s; }
-.h5 { top: -10px; left: 50%; animation-delay: 1s; }
-.h6 { top: -10px; left: 60%; animation-delay: 3s; }
-.h7 { top: -10px; left: 70%; animation-delay: 5s; }
-.h8 { top: -10px; left: 80%; animation-delay: 7s; }
-.h9 { top: -10px; left: 90%; animation-delay: 0.5s; }
-.h10 { top: -10px; left: 15%; animation-delay: 2.5s; }
-.h11 { top: -10px; left: 25%; animation-delay: 4.5s; }
-.h12 { top: -10px; left: 35%; animation-delay: 6.5s; }
-.h13 { top: -10px; left: 45%; animation-delay: 1.5s; }
-.h14 { top: -10px; left: 55%; animation-delay: 3.5s; }
-.h15 { top: -10px; left: 65%; animation-delay: 5.5s; }
-.h16 { top: -10px; left: 75%; animation-delay: 7.5s; }
-
-/* Animación de caída original */
-@keyframes heartFall {
-    0% { transform: rotate(45deg) translateY(-20px); opacity: 0.1; }
-    50% { opacity: 0.3; } /* Un poco más visibles al caer */
-    100% { transform: rotate(45deg) translateY(100vh); opacity: 0.1; }
-}
+/* Colores del editor */
+.window-bar { background: #333; padding: 5px 10px; border-radius: 8px 8px 0 0; display: flex; align-items: center; }
+.window-buttons span { width: 10px; height: 10px; border-radius: 50%; display: inline-block; margin-right: 5px; }
+.red { background: #ff5f56; } .yellow { background: #ffbd2e; } .green { background: #27c93f; }
+.file-name { color: #aaa; font-size: 0.8em; margin-left: 10px; }
+.yellow-text { color: #dcdcaa; } .blue-text { color: #9cdcfe; } .green-text { color: #ce9178; } .pink-text { color: #c2185b; } .orange-text { color: #b5cea8; }
