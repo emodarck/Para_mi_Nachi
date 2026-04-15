@@ -10,26 +10,87 @@ body {
     font-family: 'Segoe UI', sans-serif;
 }
 
-/* --- ESTILOS TORTA ANIMADA (Aparece primero) --- */
+/* --- ESTILOS TORTA CAFE ANIMADA (0-5s) --- */
 #cake-visual {
     position: absolute;
     text-align: center;
-    animation: fadeOutCake 1s forwards 5s; /* Se va después de 5 segundos */
+    animation: fadeOutCake 1s forwards 5s; /* Se va después de 5s */
+    z-index: 10; /* Asegurar que esté encima */
 }
 
-.cake { position: relative; width: 200px; height: 150px; margin: 0 auto; }
-.plate { width: 240px; height: 10px; background: #444; position: absolute; bottom: -5px; left: -20px; border-radius: 10px; }
-.layer { position: absolute; width: 200px; border-radius: 10px 10px 0 0; }
+.cake {
+    position: relative;
+    width: 200px;
+    height: 150px;
+    margin: 0 auto;
+}
+
+.plate {
+    width: 240px;
+    height: 10px;
+    background: #444;
+    position: absolute;
+    bottom: -5px;
+    left: -20px;
+    border-radius: 10px;
+}
+
+.layer {
+    position: absolute;
+    width: 200px;
+    border-radius: 10px 10px 0 0;
+}
+
 .layer-bottom { height: 50px; background: #6d4c41; bottom: 0; }
 .layer-middle { height: 50px; background: #8d6e63; bottom: 50px; }
 .layer-top { height: 50px; background: #a1887f; bottom: 100px; }
-.candle { position: absolute; background: #fff; width: 10px; height: 40px; top: 70px; left: 95px; border-radius: 3px; }
-.flame { position: absolute; background: orange; width: 10px; height: 15px; border-radius: 50%; top: -20px; animation: flicker 0.5s infinite; box-shadow: 0 0 10px orange; }
 
-@keyframes flicker { 50% { transform: scale(1.2); opacity: 0.8; } }
-.cake-text { color: #fce4ec; margin-top: 30px; font-weight: 300; }
+/* CENTRADO DE LA VELA GRANDE */
+.candle-container {
+    position: absolute;
+    width: 200px;
+    height: 150px;
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 11;
+}
 
-/* --- ESTILOS CARTA (Aparece después) --- */
+.candle {
+    background: #fff;
+    width: 15px; /* Más gruesa */
+    height: 60px; /* Más alta */
+    border-radius: 5px;
+    position: relative;
+    top: -20px; /* Elevar un poco */
+}
+
+.flame {
+    position: absolute;
+    background: orange;
+    width: 15px;
+    height: 25px;
+    border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+    top: -30px;
+    animation: flicker 0.5s infinite;
+    box-shadow: 0 0 15px orange;
+}
+
+@keyframes flicker {
+    0% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.1); opacity: 0.8; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+.cake-text {
+    color: #fce4ec;
+    margin-top: 30px;
+    font-weight: 300;
+}
+
+/* --- ESTILOS CARTA ORIGINAL (Aparece después) --- */
 #letter-container {
     opacity: 0;
     visibility: hidden;
@@ -55,7 +116,7 @@ body {
     border-radius: 20px;
     max-width: 500px;
     text-align: center;
-    border: 5px solid #ffccdd;
+    border: 5px solid #ffccdd; /* Borde rosa original */
     box-shadow: 0 10px 30px rgba(0,0,0,0.5);
     z-index: 5;
 }
@@ -63,13 +124,34 @@ body {
 .letter h1 { color: #c2185b; margin-bottom: 20px; }
 .final-message { font-weight: bold; color: #c2185b; font-size: 1.2em; }
 
-/* --- LLUVIA DE CORAZONES --- */
-.hearts { position: absolute; width: 100%; height: 100%; top: 0; left: 0; }
-.heart {
-    position: absolute; width: 15px; height: 15px; background: #ff3366;
-    transform: rotate(45deg); opacity: 0.2; animation: fall 8s infinite;
+/* --- LLUVIA DE CORAZONES CAFE --- */
+.hearts {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
 }
-.heart::before, .heart::after { content: ''; width: 15px; height: 15px; background: #ff3366; border-radius: 50%; position: absolute; }
+
+.heart {
+    position: absolute;
+    width: 15px;
+    height: 15px;
+    background: #6d4c41; /* Corazones color café */
+    transform: rotate(45deg);
+    opacity: 0.2; /* Transparencia */
+    animation: fall 8s infinite;
+}
+
+.heart::before, .heart::after {
+    content: '';
+    width: 15px;
+    height: 15px;
+    background: #6d4c41;
+    border-radius: 50%;
+    position: absolute;
+}
+
 .heart::before { top: -8px; left: 0; }
 .heart::after { left: -8px; top: 0; }
 
