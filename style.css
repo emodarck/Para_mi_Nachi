@@ -1,184 +1,124 @@
-/* --- DISEÑO BASE Y FONDO --- */
 body {
+    background-color: #fce4ec;
     margin: 0;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #121212;
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
+    font-family: 'Arial', sans-serif;
     overflow: hidden;
-    position: relative;
 }
 
-/* --- DISEÑO DEL EDITOR (Torta - Idéntico a tu imagen 3) --- */
-#editor-container {
-    background-color: #1c1c1c;
-    border-radius: 15px;
-    padding: 20px;
-    width: 600px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+/* --- ANIMACIÓN DE LA TORTA --- */
+#cake-container {
+    text-align: center;
     position: absolute;
-    z-index: 2;
-    /* --- ANIMACIÓN DE APARICIÓN Y DESAPARICIÓN --- */
-    animation: editorSequence 8s forwards; /* Dura 8 segundos en total */
+    animation: fadeOutCake 6s forwards; /* La torta se queda 6 segundos */
 }
 
-/* Animación: Aparece, se queda 5s, desaparece */
-@keyframes editorSequence {
-    0% { opacity: 0; transform: perspective(1000px) rotateY(-10deg) scale(0.8); visibility: visible; }
-    10% { opacity: 1; transform: perspective(1000px) rotateY(-10deg) scale(1); } /* Aparece rápido */
-    80% { opacity: 1; transform: perspective(1000px) rotateY(-10deg) scale(1); } /* Se mantiene visible */
-    100% { opacity: 0; transform: perspective(1000px) rotateY(-10deg) scale(0.8); visibility: hidden; } /* Desaparece */
+@keyframes fadeOutCake {
+    0% { opacity: 1; transform: scale(1); }
+    80% { opacity: 1; transform: scale(1); }
+    100% { opacity: 0; transform: scale(0.8); visibility: hidden; }
 }
 
-.window-bar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
+.cake {
+    position: relative;
+    width: 250px;
+    height: 200px;
+    margin: 0 auto;
 }
 
-.window-buttons {
-    display: flex;
-    gap: 8px;
+.plate {
+    width: 300px;
+    height: 15px;
+    background: #d1d1d1;
+    position: absolute;
+    bottom: -10px;
+    left: -25px;
+    border-radius: 10px;
 }
 
-.window-buttons span {
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
+.layer {
+    position: absolute;
+    width: 250px;
+    border-radius: 10px 10px 0 0;
 }
 
-.window-buttons .red { background-color: #ff5f56; }
-.window-buttons .yellow { background-color: #ffbd2e; }
-.window-buttons .green { background-color: #27c93f; }
+.layer-bottom { height: 60px; background: #6d4c41; bottom: 0; }
+.layer-middle { height: 60px; background: #8d6e63; bottom: 60px; }
+.layer-top { height: 60px; background: #a1887f; bottom: 120px; }
 
-.file-name {
-    color: #a0a0a0;
-    font-family: monospace;
-    font-size: 14px;
+.candle {
+    position: absolute;
+    background: #fff;
+    width: 15px;
+    height: 50px;
+    top: 70px;
+    left: 117px;
+    border-radius: 5px;
 }
 
-.code-line {
-    display: flex;
-    font-family: monospace;
-    font-size: 16px;
-    color: #e0e0e0;
+.flame {
+    position: absolute;
+    background: orange;
+    width: 15px;
+    height: 25px;
+    border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+    top: -30px;
+    animation: flicker 0.5s infinite;
 }
 
-.line-number {
-    width: 30px;
-    color: #6a6a6a;
-    text-align: right;
-    margin-right: 15px;
+@keyframes flicker {
+    0% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.1); opacity: 0.8; }
+    100% { transform: scale(1); opacity: 1; }
 }
 
-/* --- COLORES DEL CÓDIGO (Idénticos a tu imagen 3) --- */
-.line-code .yellow-text { color: #d4e157; }
-.line-code .blue-text { color: #81d4fa; }
-.line-code .green-text { color: #9ccc65; }
-.line-code .pink-text { color: #c2185b; }
-.line-code .orange-text { color: #ffab40; }
+.cake-text { color: #c2185b; margin-top: 40px; }
 
-/* --- DISEÑO DE LA CARTA (Idéntico a tu imagen 2, pero aparece después) --- */
+/* --- CARTA (Aparece después) --- */
 #letter-container {
     opacity: 0;
     visibility: hidden;
-    position: absolute;
-    z-index: 1;
-    width: 100%;
-    height: 100%;
+    animation: fadeInLetter 2s forwards 6s;
     display: flex;
     justify-content: center;
     align-items: center;
-    /* --- ANIMACIÓN DE APARICIÓN DE LA CARTA --- */
-    animation: fadeInLetter 3s forwards 8s; /* Aparece después de 8s, cuando el editor se va */
+    width: 100%;
 }
 
 @keyframes fadeInLetter {
-    0% { opacity: 0; visibility: hidden; }
-    100% { opacity: 1; visibility: visible; }
+    to { opacity: 1; visibility: visible; }
 }
 
 .letter {
-    background-color: #fff;
-    color: #333;
-    width: 90%;
-    max-width: 700px;
-    padding: 50px;
+    background: white;
+    padding: 40px;
     border-radius: 20px;
-    box-shadow: 0 15px 50px rgba(0, 0, 0, 0.3);
-    border: 5px solid #ffccdd; /* Borde rosa */
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
     text-align: center;
-    position: relative;
-    z-index: 3;
+    max-width: 600px;
+    border: 4px solid #f8bbd0;
 }
 
-.letter h1 {
-    color: #c2185b;
-    margin-top: 0;
-    font-size: 2.2em;
-}
-
-.letter p {
-    font-size: 1.1em;
-    line-height: 1.6;
-    margin-bottom: 1.2em;
-}
-
-.letter .final-message {
-    font-weight: bold;
-    font-size: 1.3em;
-    margin-top: 1.5em;
-    color: #c2185b;
-}
-
-/* --- FONDO DE CORAZONES --- */
-.hearts {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-    overflow: hidden;
-}
-
+/* --- CORAZONES CAYENDO --- */
 .heart {
     position: absolute;
-    width: 20px;
-    height: 20px;
-    background-color: #ff3366;
-    opacity: 0.1; /* Transparente */
+    background: #ff4081;
+    width: 10px; height: 10px;
     transform: rotate(45deg);
-    animation: heartFall 10s infinite;
+    animation: fall 5s infinite;
+    opacity: 0.5;
 }
-
 .heart::before, .heart::after {
-    content: '';
-    position: absolute;
-    width: 20px;
-    height: 20px;
-    background-color: #ff3366;
-    border-radius: 50%;
+    content: ''; background: #ff4081; border-radius: 50%;
+    width: 10px; height: 10px; position: absolute;
 }
+.heart::before { top: -5px; left: 0; }
+.heart::after { left: -5px; top: 0; }
 
-.heart::before { top: -10px; left: 0; }
-.heart::after { left: -10px; top: 0; }
-
-/* Posicionamiento aleatorio de corazones */
-.heart:nth-child(1) { top: -10px; left: 10%; animation-delay: 0s; }
-.heart:nth-child(2) { top: -10px; left: 30%; animation-delay: 2s; }
-.heart:nth-child(3) { top: -10px; left: 50%; animation-delay: 4s; }
-.heart:nth-child(4) { top: -10px; left: 70%; animation-delay: 1s; }
-.heart:nth-child(5) { top: -10px; left: 90%; animation-delay: 3s; }
-.heart:nth-child(6) { top: -10px; left: 20%; animation-delay: 6s; }
-.heart:nth-child(7) { top: -10px; left: 80%; animation-delay: 5s; }
-.heart:nth-child(8) { top: -10px; left: 40%; animation-delay: 7s; }
-
-@keyframes heartFall {
-    0% { transform: rotate(45deg) translateY(-20px); opacity: 0.1; }
-    50% { opacity: 0.3; }
-    100% { transform: rotate(45deg) translateY(100vh); opacity: 0.1; }
+@keyframes fall {
+    0% { top: -10%; transform: rotate(45deg) translateX(0); }
+    100% { top: 110%; transform: rotate(45deg) translateX(100px); }
 }
