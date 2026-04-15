@@ -9,12 +9,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Quicksand:wght@400;700&display=swap" rel="stylesheet">
 
     <style>
-        /* --- AQUÍ ESTÁ TODA LA MAGIA DEL DISEÑO --- */
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
 
         body {
             font-family: 'Quicksand', sans-serif;
@@ -37,9 +32,7 @@
             z-index: 1;
         }
 
-        .hidden-section {
-            display: none !important;
-        }
+        .hidden-section { display: none !important; }
 
         .active-section {
             display: flex !important;
@@ -49,12 +42,9 @@
             animation: fadeIn 1s ease-in-out;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-        /* DISEÑO DE LA TARJETA DE LA TARTA */
+        /* DISEÑO DE LA TARTA */
         .cake-card {
             background: #fff0f5;
             padding: 25px;
@@ -76,18 +66,8 @@
             margin-bottom: 15px;
         }
 
-        .cake-image {
-            width: 250px;
-            height: auto;
-            border-radius: 15px;
-            margin-bottom: 10px;
-        }
-
-        .wish-text {
-            font-family: 'Pacifico', cursive;
-            color: #880e4f;
-            font-size: 20px;
-        }
+        .cake-image { width: 250px; height: auto; border-radius: 15px; margin-bottom: 10px; }
+        .wish-text { font-family: 'Pacifico', cursive; color: #880e4f; font-size: 20px; }
 
         /* DISEÑO DE LA CARTA */
         .letter-paper {
@@ -96,48 +76,38 @@
             padding: 30px;
             max-width: 600px;
             box-shadow: 0 10px 25px rgba(0,0,0,0.5);
-            border: 5px solid #f48fb1; /* BORDE ROSADO */
+            border: 5px solid #f48fb1; /* EL BORDE ROSADO */
             color: #3e2723;
             z-index: 2;
+            position: relative;
         }
 
-        .letter-content h1 {
-            font-size: 24px;
-            margin-bottom: 20px;
-            color: #b71c1c;
-            text-align: center;
-        }
+        .letter-content h1 { font-size: 24px; margin-bottom: 20px; color: #b71c1c; text-align: center; }
+        .letter-content p { margin-bottom: 15px; font-size: 16px; line-height: 1.6; }
 
-        .letter-content p {
-            margin-bottom: 15px;
-            font-size: 16px;
-            line-height: 1.6;
-        }
-
+        /* ESTILO PARA EL MENSAJE SORPRESA */
         .final-message {
             font-weight: bold;
             text-align: center;
             color: #880e4f;
-            margin-top: 20px;
+            margin-top: 25px;
+            font-size: 20px;
+            opacity: 0; /* Empieza invisible */
+            transform: translateY(20px);
+            transition: all 2s ease; /* Aparece suave */
         }
+
+        .visible { opacity: 1 !important; transform: translateY(0) !important; }
 
         /* CORAZONES ANIMADOS */
         .hearts-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 0;
-            pointer-events: none;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            z-index: 0; pointer-events: none;
         }
 
         .heart {
-            position: absolute;
-            font-size: 20px;
-            top: -20px;
-            animation: rain 3s infinite linear;
-            opacity: 0;
+            position: absolute; font-size: 20px; top: -20px;
+            animation: rain 3s infinite linear; opacity: 0;
         }
 
         @keyframes rain {
@@ -149,19 +119,11 @@
 
         /* BOTÓN DE MÚSICA */
         #music-control {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background-color: #f48fb1;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            cursor: pointer;
-            z-index: 1000;
-            font-size: 24px;
+            position: fixed; bottom: 25px; right: 25px;
+            background-color: #f48fb1; width: 60px; height: 60px;
+            border-radius: 50%; display: flex; justify-content: center;
+            align-items: center; cursor: pointer; z-index: 1000;
+            font-size: 28px; box-shadow: 0 4px 10px rgba(255,255,255,0.2);
         }
     </style>
 </head>
@@ -185,11 +147,10 @@
         <div id="letter-section" class="hidden-section">
             <div class="hearts-container">
                 <div class="heart" style="left: 10%; animation-delay: 0s;">❤️</div>
-                <div class="heart" style="left: 25%; animation-delay: 0.5s;">💖</div>
-                <div class="heart" style="left: 40%; animation-delay: 1.2s;">💝</div>
-                <div class="heart" style="left: 60%; animation-delay: 0.2s;">💘</div>
-                <div class="heart" style="left: 80%; animation-delay: 0.8s;">❤️</div>
-                <div class="heart" style="left: 95%; animation-delay: 1.5s;">💖</div>
+                <div class="heart" style="left: 30%; animation-delay: 1s;">💖</div>
+                <div class="heart" style="left: 50%; animation-delay: 0.5s;">💝</div>
+                <div class="heart" style="left: 70%; animation-delay: 1.5s;">💘</div>
+                <div class="heart" style="left: 90%; animation-delay: 0.2s;">❤️</div>
             </div>
 
             <div class="letter-paper">
@@ -198,21 +159,29 @@
                     <p>¡Llegó tu día! Quería decirte frente a todos que me encanta el camino que estamos armando juntos. Mirar atrás y ver todo lo que hemos vivido es increíble; siento que nos conocemos de toda la vida.</p>
                     <p>Solo quiero recordarte que eres una persona maravillosa y que te quiero demasiado. Espero que hoy lo pases súper y que este nuevo año de vida venga puros éxitos.</p>
                     <p>¡De verdad espero que te vaya increíble en todo lo que venga, mi Nachi! Aquí voy a estar siempre para celebrar tus logros y apoyarte en todas.</p>
-                    <p class="final-message">¡TE AMO MUCHO! ❤️😊✨</p>
+                    
+                    <p id="mensaje-sorpresa" class="final-message">¡TE AMO MUCHO! ❤️😊✨</p>
                 </div>
             </div>
         </div>
     </div>
 
     <script>
-        // Lógica de cambio de pantalla (5 segundos)
+        // Lógica de Tiempos
         setTimeout(function() {
+            // Cambia a la carta a los 5 segundos
             document.getElementById('cake-section').classList.add('hidden-section');
             document.getElementById('letter-section').classList.remove('hidden-section');
             document.getElementById('letter-section').classList.add('active-section');
+
+            // Muestra el "TE AMO MUCHO" 4 segundos después de que aparezca la carta
+            setTimeout(function() {
+                document.getElementById('mensaje-sorpresa').classList.add('visible');
+            }, 4000);
+
         }, 5000);
 
-        // Lógica de YouTube
+        // API de YouTube para la canción de Cuco
         var tag = document.createElement('script');
         tag.src = "https://www.youtube.com/iframe_api";
         var firstScriptTag = document.getElementsByTagName('script')[0];
