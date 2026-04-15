@@ -8,54 +8,121 @@
 
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
+        
         body {
             font-family: 'Quicksand', sans-serif;
             min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            background-color: #000;
+            background-color: #000; /* Fondo negro siempre */
             color: white;
             overflow: hidden;
         }
 
-        /* --- CONTENEDORES --- */
-        .main-container { width: 90%; max-width: 600px; z-index: 10; position: relative; }
+        /* --- CONTENEDOR PRINCIPAL --- */
+        .main-container {
+            width: 90%;
+            max-width: 500px;
+            position: relative;
+            z-index: 20; /* Asegura que esté por encima de todo */
+        }
 
-        /* --- SECCIÓN TARTA --- */
+        /* --- VISTA 1: TARTA --- */
         #cake-section {
-            background: #fff0f5; padding: 30px; border-radius: 30px;
-            text-align: center; display: flex; flex-direction: column; align-items: center;
+            background: #fff0f5;
+            padding: 30px;
+            border-radius: 30px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
             box-shadow: 0 10px 30px rgba(244, 143, 177, 0.4);
         }
-        .bday-banner { background: #f48fb1; color: white; padding: 10px 25px; border-radius: 12px; font-weight: bold; margin-bottom: 15px; }
+
+        .bday-banner {
+            background: #f48fb1;
+            color: white;
+            padding: 10px 25px;
+            border-radius: 12px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
         .cake-image { width: 250px; border-radius: 15px; }
         .wish-text { font-family: 'Pacifico', cursive; color: #880e4f; font-size: 20px; margin-top: 10px; }
 
-        /* --- SECCIÓN CARTA (OCULTA AL INICIO) --- */
+        /* --- VISTA 2: CARTA --- */
         #letter-section {
-            display: none; width: 100%;
+            display: none; /* Empieza oculta */
+            width: 100%;
         }
+
         .letter-paper {
-            background-color: #fffde7; border-radius: 20px; padding: 30px;
-            border: 5px solid #f48fb1; color: #3e2723;
+            background-color: #fffde7;
+            border-radius: 20px;
+            padding: 30px;
+            border: 5px solid #f48fb1;
+            color: #3e2723;
             box-shadow: 0 10px 40px rgba(0,0,0,0.8);
         }
+
         .letter-content h1 { color: #b71c1c; text-align: center; margin-bottom: 20px; }
         .letter-content p { margin-bottom: 15px; line-height: 1.6; font-size: 17px; }
-        .final-message { font-weight: bold; text-align: center; color: #880e4f; margin-top: 20px; font-size: 22px; opacity: 0; transition: 2s; }
+
+        .final-message {
+            font-weight: bold;
+            text-align: center;
+            color: #880e4f;
+            margin-top: 20px;
+            font-size: 22px;
+            opacity: 0;
+            transition: opacity 2s ease;
+        }
 
         /* --- LLUVIA DE CORAZONES --- */
-        #hearts-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 5; pointer-events: none; }
-        .heart { position: absolute; top: -50px; animation: fall linear infinite; }
-        @keyframes fall { to { transform: translateY(110vh) translateX(30px); opacity: 0; } }
+        #hearts-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 5; /* Entre el fondo y la carta */
+            pointer-events: none;
+        }
 
-        /* --- MÚSICA --- */
-        #music-btn { position: fixed; bottom: 20px; right: 20px; background: #f48fb1; width: 60px; height: 60px; border-radius: 50%; display: flex; justify-content: center; align-items: center; cursor: pointer; font-size: 30px; z-index: 100; }
+        .heart {
+            position: absolute;
+            top: -50px;
+            animation: fall linear infinite;
+        }
 
-        /* --- ANIMACIÓN TRANSICIÓN --- */
-        .fade-out { animation: fadeOut 1s forwards; }
-        @keyframes fadeOut { from { opacity: 1; transform: scale(1); } to { opacity: 0; transform: scale(0.9); } }
+        @keyframes fall {
+            to { transform: translateY(110vh) translateX(30px); opacity: 0; }
+        }
+
+        /* --- BOTÓN MÚSICA --- */
+        #music-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #f48fb1;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            font-size: 30px;
+            z-index: 100;
+        }
+
+        /* Animación suave de salida */
+        .fade-out {
+            opacity: 0;
+            transition: opacity 1s ease;
+        }
     </style>
 </head>
 <body>
@@ -65,3 +132,80 @@
     <div id="player" style="position: absolute; top: -1000px;"></div>
 
     <div class="main-container">
+        <div id="cake-section">
+            <div class="bday-banner">HAPPY BIRTHDAY!</div>
+            <img src="cake.png" alt="Tarta" class="cake-image" onerror="this.src='https://cdn-icons-png.flaticon.com/512/3132/3132693.png'">
+            <p class="wish-text">¡Pide un deseo, Nachi! 🎂</p>
+        </div>
+
+        <div id="letter-section">
+            <div class="letter-paper">
+                <div class="letter-content">
+                    <h1>¡FELIZ CUMPLEAÑOS, MARTIN! 🎂🔥</h1>
+                    <p>¡Llegó tu día! Quería decirte frente a todos que me encanta el camino que estamos armando juntos. Mirar atrás y ver todo lo que hemos vivido es increíble; siento que nos conocemos de toda la vida.</p>
+                    <p>Solo quiero recordarte que eres una persona maravillosa y que te quiero demasiado. Espero que hoy lo pases súper y que este nuevo año de vida venga puros éxitos.</p>
+                    <p>¡De verdad espero que te vaya increíble en todo lo que venga, mi Nachi! Aquí voy a estar siempre para celebrar tus logros y apoyarte en todas.</p>
+                    <p id="te-amo" class="final-message">¡TE AMO MUCHO! ❤️😊✨</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Función para la lluvia de corazones
+        function crearLluvia() {
+            const container = document.getElementById('hearts-container');
+            const emojis = ['❤️', '💖', '💝', '💘'];
+            setInterval(() => {
+                const h = document.createElement('div');
+                h.className = 'heart';
+                h.innerHTML = emojis[Math.floor(Math.random() * emojis.length)];
+                h.style.left = Math.random() * 100 + 'vw';
+                h.style.animationDuration = (Math.random() * 2 + 3) + 's';
+                h.style.fontSize = (Math.random() * 10 + 20) + 'px';
+                container.appendChild(h);
+                setTimeout(() => h.remove(), 5000);
+            }, 300);
+        }
+
+        // Lógica de transición
+        setTimeout(() => {
+            const cake = document.getElementById('cake-section');
+            const letter = document.getElementById('letter-section');
+            
+            // 1. Desaparece la tarta suavemente
+            cake.classList.add('fade-out');
+            
+            setTimeout(() => {
+                // 2. Quitamos la tarta y mostramos la carta
+                cake.style.display = 'none';
+                letter.style.display = 'block';
+                
+                // 3. Empieza la lluvia de corazones
+                crearLluvia();
+                
+                // 4. Muestra el "Te amo" después de un ratito
+                setTimeout(() => {
+                    document.getElementById('te-amo').style.opacity = '1';
+                }, 3000);
+            }, 1000);
+        }, 5000); // 5 segundos para ver la tarta
+
+        // Música Cuco (YouTube)
+        var tag = document.createElement('script');
+        tag.src = "https://www.youtube.com/iframe_api";
+        document.head.appendChild(tag);
+        var player;
+        function onYouTubeIframeAPIReady() {
+            player = new YT.Player('player', {
+                height: '0', width: '0', videoId: 'DjribxozAQw',
+                playerVars: { 'playlist': 'DjribxozAQw', 'loop': 1 }
+            });
+        }
+        function toggleMusic() {
+            if (player.getPlayerState() === 1) { player.pauseVideo(); } 
+            else { player.playVideo(); }
+        }
+    </script>
+</body>
+</html>
