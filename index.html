@@ -21,6 +21,7 @@
 
         .main-container { width: 90%; max-width: 500px; position: relative; z-index: 20; }
 
+        /* VISTA 1: TARTA */
         #cake-section {
             background: #fff0f5; padding: 30px; border-radius: 30px;
             text-align: center; display: flex; flex-direction: column; align-items: center;
@@ -30,6 +31,7 @@
         .cake-image { width: 250px; border-radius: 15px; }
         .wish-text { font-family: 'Pacifico', cursive; color: #880e4f; font-size: 20px; margin-top: 10px; }
 
+        /* VISTA 2: CARTA */
         #letter-section { display: none; width: 100%; }
         .letter-paper {
             background-color: #fffde7; border-radius: 20px; padding: 30px;
@@ -40,16 +42,29 @@
         .letter-content p { margin-bottom: 15px; line-height: 1.6; font-size: 17px; }
         .final-message { font-weight: bold; text-align: center; color: #880e4f; margin-top: 20px; font-size: 22px; opacity: 0; transition: 2s; }
 
+        /* LLUVIA DE CORAZONES */
         #hearts-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 5; pointer-events: none; }
         .heart { position: absolute; top: -50px; animation: fall linear infinite; }
         @keyframes fall { to { transform: translateY(110vh) translateX(30px); opacity: 0; } }
 
-        #music-btn {
-            position: fixed; bottom: 20px; right: 20px;
-            background: #f48fb1; width: 65px; height: 65px;
-            border-radius: 50%; display: flex; justify-content: center;
-            align-items: center; cursor: pointer; font-size: 32px;
-            z-index: 1000; border: none; box-shadow: 0 4px 15px rgba(244, 143, 177, 0.5);
+        /* BOTÓN DE MÚSICA REFORZADO */
+        #music-control {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #f48fb1;
+            color: white;
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-weight: bold;
+            cursor: pointer;
+            z-index: 1000;
+            border: 3px solid white;
+            box-shadow: 0 5px 20px rgba(244, 143, 177, 0.6);
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
 
         .fade-out { opacity: 0; transition: opacity 1s ease; }
@@ -57,15 +72,13 @@
 </head>
 <body>
 
-    <iframe id="youtube-player" 
-            style="position: absolute; top: -1000px; left: -1000px;"
-            width="1" height="1" 
-            src="https://www.youtube.com/embed/Zn94qAVXeQc?enablejsapi=1&loop=1&playlist=Zn94qAVXeQc" 
-            frameborder="0" 
-            allow="autoplay">
-    </iframe>
+    <div id="music-control" onclick="activarMusica()">
+        <span id="icon">🎵</span> <span id="text">Pulsar para la música</span>
+    </div>
 
-    <button id="music-btn" onclick="toggleMusic()">🎵</button>
+    <audio id="bg-music" loop>
+        <source src="https://www.chosic.com/wp-content/uploads/2021/07/The-Epic-Hero-Epic-Cinematic-Music.mp3" type="audio/mpeg">
+    </audio>
     
     <div id="hearts-container"></div>
 
@@ -80,9 +93,9 @@
             <div class="letter-paper">
                 <div class="letter-content">
                     <h1>¡FELIZ CUMPLEAÑOS, MARTIN! 🎂🔥</h1>
-                    <p>¡Llegó tu día! Quería decirte frente a todos que me encanta el camino que estamos armando juntos. Mirar atrás y ver todo lo que hemos vivido es increíble; siento que nos conocemos de toda la vida.</p>
+                    <p>¡Llegó tu día! Quería decirte frente a todos que me encanta el camino que estamos armando juntos. Mirar atrás y ver todo lo que hemos vivido es increíble.</p>
                     <p>Solo quiero recordarte que eres una persona maravillosa y que te quiero demasiado. Espero que hoy lo pases súper y que este nuevo año de vida venga puros éxitos.</p>
-                    <p>¡De verdad espero que te vaya increíble en todo lo que venga, mi Nachi! Aquí voy a estar siempre para celebrar tus logros y apoyarte en todas.</p>
+                    <p>¡Aquí voy a estar siempre para celebrar tus logros y apoyarte en todas!</p>
                     <p id="te-amo" class="final-message">¡TE AMO MUCHO! ❤️😊✨</p>
                 </div>
             </div>
@@ -90,21 +103,25 @@
     </div>
 
     <script>
-        // Lógica de música con YouTube Iframe API
-        let playing = false;
-        function toggleMusic() {
-            const iframe = document.getElementById('youtube-player');
-            const btn = document.getElementById('music-btn');
-            
-            if (!playing) {
-                // Envía el comando de "play" al video de YouTube
-                iframe.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
-                btn.innerHTML = "🔊";
-                playing = true;
+        const music = document.getElementById('bg-music');
+        const control = document.getElementById('music-control');
+
+        function activarMusica() {
+            if (music.paused) {
+                music.play().then(() => {
+                    document.getElementById('text').innerText = "Música ON";
+                    document.getElementById('icon').innerText = "🔊";
+                    // Movemos el botón a la esquina para que no moleste
+                    control.style.bottom = "20px";
+                    control.style.left = "auto";
+                    control.style.right = "20px";
+                    control.style.transform = "none";
+                    control.style.padding = "10px 15px";
+                    document.getElementById('text').style.display = "none";
+                }).catch(e => alert("Toca de nuevo para activar el sonido"));
             } else {
-                iframe.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*');
-                btn.innerHTML = "🎵";
-                playing = false;
+                music.pause();
+                document.getElementById('icon').innerText = "🎵";
             }
         }
 
@@ -123,7 +140,6 @@
             }, 300);
         }
 
-        // Transición a la carta
         setTimeout(() => {
             const cake = document.getElementById('cake-section');
             const letter = document.getElementById('letter-section');
@@ -132,9 +148,7 @@
                 cake.style.display = 'none';
                 letter.style.display = 'block';
                 crearLluvia();
-                setTimeout(() => {
-                    document.getElementById('te-amo').style.opacity = '1';
-                }, 3000);
+                setTimeout(() => { document.getElementById('te-amo').style.opacity = '1'; }, 3000);
             }, 1000);
         }, 5000);
     </script>
