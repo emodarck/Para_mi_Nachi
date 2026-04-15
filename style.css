@@ -6,143 +6,117 @@
 }
 
 body {
+    font-family: 'Quicksand', sans-serif;
+    min-height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 100vh;
-    background-color: #fce4ec; /* Fondo rosa clarito de la página */
-    font-family: 'Quicksand', sans-serif; /* Fuente principal legible */
+    background-color: #000; /* FONDO NEGRO GLOBAL, como pediste */
+    color: white; /* Color de texto por defecto para el fondo negro */
 }
 
-/* --- MARCO PRINCIPAL REDONDEADO --- */
-.main-frame {
+/* --- CONTENEDOR PRINCIPAL --- */
+.main-container {
     width: 90%;
     max-width: 800px;
-    background-color: #f8bbd0; /* Rosa un poco más intenso para el marco */
-    border-radius: 30px; /* Bordes redondeados grandotes */
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-}
-
-/* --- SECCIÓN SUPERIOR DE LA TARTA --- */
-.cake-section {
     display: flex;
     justify-content: center;
     align-items: center;
+    position: relative;
+    overflow: hidden;
 }
 
+/* --- ESTILOS PARA GESTIONAR LAS SECCIONES --- */
+.hidden-section {
+    display: none !important;
+}
+
+.active-section {
+    display: flex !important;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    animation: fadeIn 1s ease-in-out; /* Transición suave al aparecer */
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* --- SECCIÓN 1: ESTILOS DE LA TARTA (Original) --- */
 .cake-card {
-    background: white;
-    border-radius: 20px;
-    padding: 15px;
+    background: #fff0f5; /* Fondo rosa pálido para la tarjeta de la tarta */
+    padding: 25px;
+    border-radius: 30px;
+    box-shadow: 0 15px 30px rgba(255,182,193,0.3); /* Sombra rosa suave */
     display: flex;
     flex-direction: column;
     align-items: center;
+    text-align: center;
 }
 
 .bday-banner {
     background-color: #f48fb1;
     color: white;
-    padding: 5px 20px;
-    border-radius: 10px;
+    padding: 8px 25px;
+    border-radius: 12px;
     font-weight: bold;
-    font-size: 14px;
-    margin-bottom: 10px;
+    font-size: 16px;
+    margin-bottom: 15px;
+    letter-spacing: 1px;
 }
 
 .cake-image {
-    max-width: 150px; /* Ajusta este tamaño si es necesario */
+    width: 250px;
     height: auto;
+    border-radius: 15px;
+    margin-bottom: 10px;
+    display: block;
 }
 
 .wish-text {
-    font-family: 'Pacifico', cursive; /* Fuente manuscrita para este texto */
+    font-family: 'Pacifico', cursive;
     color: #880e4f;
-    font-size: 18px;
+    font-size: 20px;
     margin-top: 5px;
 }
 
-/* --- SECCIÓN INFERIOR DE LA CARTA --- */
-.letter-section {
-    position: relative; /* Necesario para que los corazones floten dentro */
-    background-color: #f8bbd0;
-    border-radius: 20px;
-    padding: 20px;
-    overflow: hidden; /* Oculta los corazones cuando salen del recuadro */
-    display: flex;
-    justify-content: center;
+/* --- SECCIÓN 2: ESTILOS DE LA CARTA --- */
+#letter-section {
+    background-color: #000; /* FONDO NEGRO TAMBIÉN PARA LA CARTA */
+    color: #3e2723; /* Mantener texto oscuro para legibilidad en papel crema */
 }
 
-/* --- EL PAPEL DE LA CARTA --- */
 .letter-paper {
-    background-color: #fffde7; /* Color crema suave del papel */
-    border-radius: 15px;
-    padding: 25px;
-    position: relative;
-    z-index: 2; /* Pone el papel por encima de los corazones */
+    background-color: #fffde7; /* Papel crema suave */
+    border-radius: 20px;
+    padding: 30px;
     max-width: 600px;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-}
-
-.letter-content {
-    color: #3e2723; /* Color marrón oscuro para el texto, no negro */
-    text-align: center;
-    line-height: 1.6;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.5); /* Sombra más fuerte sobre fondo negro */
 }
 
 .letter-content h1 {
-    font-size: 22px;
-    margin-bottom: 20px;
-    color: #b71c1c; /* Un rojo oscuro para el título */
+    font-size: 24px;
+    margin-bottom: 25px;
+    color: #b71c1c; /* Título rojo oscuro */
+    text-align: center;
 }
 
 .letter-content p {
-    margin-bottom: 15px;
-    font-size: 16px;
+    margin-bottom: 18px;
+    font-size: 17px;
+    line-height: 1.7;
+    text-align: left; /* Párrafos alineados a la izquierda para mejor lectura */
 }
 
 .letter-content .final-message {
     font-weight: bold;
-    font-size: 18px;
-    margin-top: 20px;
+    font-size: 19px;
+    margin-top: 25px;
     margin-bottom: 0;
+    text-align: center;
+    color: #880e4f;
 }
 
-/* --- ANIMACIÓN DE LLUVIA DE CORAZONES (RÁPIDA) --- */
-.hearts-container {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 1; /* Pone los corazones por detrás del papel */
-}
-
-.heart {
-    position: absolute;
-    font-size: 20px;
-    opacity: 0;
-    top: -20px; /* Empiezan arriba */
-    animation: rain 2s infinite linear; /* ANIMACIÓN MÁS RÁPIDA (2 segundos) */
-}
-
-@keyframes rain {
-    0% {
-        top: -20px;
-        opacity: 0;
-        transform: translateX(0) scale(1);
-    }
-    10% {
-        opacity: 0.8;
-    }
-    90% {
-        opacity: 0.8;
-    }
-    100% {
-        top: 100%; /* Llegan abajo */
-        opacity: 0;
-        transform: translateX(20px) scale(0.8); /* Se mueven un poco de lado */
-    }
-}
+/* Eliminamos todos los estilos de corazones anteriores */
