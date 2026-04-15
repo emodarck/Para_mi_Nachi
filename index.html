@@ -4,10 +4,166 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Para mi Nachi ❤️</title>
-    <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Quicksand:wght@400;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* --- AQUÍ ESTÁ TODA LA MAGIA DEL DISEÑO --- */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Quicksand', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #000; /* FONDO NEGRO */
+            color: white;
+            overflow-x: hidden;
+        }
+
+        .main-container {
+            width: 90%;
+            max-width: 800px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hidden-section {
+            display: none !important;
+        }
+
+        .active-section {
+            display: flex !important;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* DISEÑO DE LA TARJETA DE LA TARTA */
+        .cake-card {
+            background: #fff0f5;
+            padding: 25px;
+            border-radius: 30px;
+            box-shadow: 0 15px 30px rgba(255,182,193,0.3);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .bday-banner {
+            background-color: #f48fb1;
+            color: white;
+            padding: 8px 25px;
+            border-radius: 12px;
+            font-weight: bold;
+            font-size: 16px;
+            margin-bottom: 15px;
+        }
+
+        .cake-image {
+            width: 250px;
+            height: auto;
+            border-radius: 15px;
+            margin-bottom: 10px;
+        }
+
+        .wish-text {
+            font-family: 'Pacifico', cursive;
+            color: #880e4f;
+            font-size: 20px;
+        }
+
+        /* DISEÑO DE LA CARTA */
+        .letter-paper {
+            background-color: #fffde7;
+            border-radius: 20px;
+            padding: 30px;
+            max-width: 600px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+            border: 5px solid #f48fb1; /* BORDE ROSADO */
+            color: #3e2723;
+            z-index: 2;
+        }
+
+        .letter-content h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: #b71c1c;
+            text-align: center;
+        }
+
+        .letter-content p {
+            margin-bottom: 15px;
+            font-size: 16px;
+            line-height: 1.6;
+        }
+
+        .final-message {
+            font-weight: bold;
+            text-align: center;
+            color: #880e4f;
+            margin-top: 20px;
+        }
+
+        /* CORAZONES ANIMADOS */
+        .hearts-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .heart {
+            position: absolute;
+            font-size: 20px;
+            top: -20px;
+            animation: rain 3s infinite linear;
+            opacity: 0;
+        }
+
+        @keyframes rain {
+            0% { top: -20px; opacity: 0; }
+            10% { opacity: 0.8; }
+            90% { opacity: 0.8; }
+            100% { top: 100%; opacity: 0; transform: translateX(20px); }
+        }
+
+        /* BOTÓN DE MÚSICA */
+        #music-control {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #f48fb1;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            z-index: 1000;
+            font-size: 24px;
+        }
+    </style>
 </head>
 <body>
 
@@ -15,40 +171,25 @@
         <span id="music-icon">🎵</span>
     </div>
 
-    <div id="youtube-player"></div>
+    <div id="youtube-player" style="position: absolute; visibility: hidden;"></div>
 
     <div class="main-container">
         <div id="cake-section" class="active-section">
             <div class="cake-card">
                 <div class="bday-banner">HAPPY BIRTHDAY!</div>
-                <img src="cake.png" alt="Tarta de cumpleaños de Nachi" class="cake-image">
+                <img src="cake.png" alt="Tarta" class="cake-image">
                 <p class="wish-text">¡Pide un deseo, Nachi! 🎂</p>
             </div>
         </div>
 
-      <div id="letter-section" class="hidden-section">
-
+        <div id="letter-section" class="hidden-section">
             <div class="hearts-container">
-
-                <div class="heart" style="left: 10%; animation-delay: 0s;">❤️</div
-                <div class="heart" style="left: 20%; animation-delay: 0.2s;">💖</div>
-                <div class="heart" style="left: 30%; animation-delay: 0.4s;">💝</div>
-                <div class="heart" style="left: 40%; animation-delay: 0.1s;">❤️</div>
-                <div class="heart" style="left: 50%; animation-delay: 0.3s;">💘</div>
-                <div class="heart" style="left: 60%; animation-delay: 0.5s;">💖</div>
-                <div class="heart" style="left: 70%; animation-delay: 0s;">❤️</div>
-                <div class="heart" style="left: 80%; animation-delay: 0.2s;">💝</div>
-                <div class="heart" style="left: 90%; animation-delay: 0.4s;">❤️</div>
-                <div class="heart" style="left: 15%; animation-delay: 0.6s;">💖</div>
-                <div class="heart" style="left: 25%; animation-delay: 0.4s;">❤️</div>
-                <div class="heart" style="left: 35%; animation-delay: 1s;">💘</div>
-                <div class="heart" style="left: 45%; animation-delay: 0.5s;">💝</div>
-                <div class="heart" style="left: 55%; animation-delay: 0.6s;">❤️</div>
-                <div class="heart" style="left: 65%; animation-delay: 1.1s;">💖</div>
-                <div class="heart" style="left: 75%; animation-delay: 0.6s;">❤️</div>
-                <div class="heart" style="left: 85%; animation-delay: 0.4s;">💘</div>
-                <div class="heart" style="left: 95%; animation-delay: 1s;">💝</div>
-
+                <div class="heart" style="left: 10%; animation-delay: 0s;">❤️</div>
+                <div class="heart" style="left: 25%; animation-delay: 0.5s;">💖</div>
+                <div class="heart" style="left: 40%; animation-delay: 1.2s;">💝</div>
+                <div class="heart" style="left: 60%; animation-delay: 0.2s;">💘</div>
+                <div class="heart" style="left: 80%; animation-delay: 0.8s;">❤️</div>
+                <div class="heart" style="left: 95%; animation-delay: 1.5s;">💖</div>
             </div>
 
             <div class="letter-paper">
@@ -64,7 +205,14 @@
     </div>
 
     <script>
-        // --- LÓGICA DE YOUTUBE ---
+        // Lógica de cambio de pantalla (5 segundos)
+        setTimeout(function() {
+            document.getElementById('cake-section').classList.add('hidden-section');
+            document.getElementById('letter-section').classList.remove('hidden-section');
+            document.getElementById('letter-section').classList.add('active-section');
+        }, 5000);
+
+        // Lógica de YouTube
         var tag = document.createElement('script');
         tag.src = "https://www.youtube.com/iframe_api";
         var firstScriptTag = document.getElementsByTagName('script')[0];
@@ -73,21 +221,15 @@
         var player;
         function onYouTubeIframeAPIReady() {
             player = new YT.Player('youtube-player', {
-                height: '0',
-                width: '0',
-                videoId: 'DjribxozAQw', // ID de la canción de Cuco
-                playerVars: {
-                    'autoplay': 0,
-                    'controls': 0,
-                    'loop': 1,
-                    'playlist': 'DjribxozAQw'
-                }
+                height: '0', width: '0',
+                videoId: 'DjribxozAQw',
+                playerVars: { 'loop': 1, 'playlist': 'DjribxozAQw' }
             });
         }
 
         function toggleMusic() {
             const icono = document.getElementById('music-icon');
-            if (player.getPlayerState() === 1) { // 1 significa que está sonando
+            if (player.getPlayerState() === 1) {
                 player.pauseVideo();
                 icono.innerHTML = "🎵";
             } else {
@@ -95,14 +237,6 @@
                 icono.innerHTML = "🔊";
             }
         }
-
-        // --- LÓGICA DE CAMBIO DE SECCIÓN ---
-        setTimeout(function() {
-            document.getElementById('cake-section').classList.remove('active-section');
-            document.getElementById('cake-section').classList.add('hidden-section');
-            document.getElementById('letter-section').classList.remove('hidden-section');
-            document.getElementById('letter-section').classList.add('active-section');
-        }, 5000);
     </script>
 </body>
 </html>
