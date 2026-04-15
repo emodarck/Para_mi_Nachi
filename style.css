@@ -1,203 +1,89 @@
-/* --- DISEÑO BASE Y FONDO --- */
 body {
     margin: 0;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #121212; /* Fondo oscuro original */
+    background-color: #121212; /* Fondo negro elegante */
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
     overflow: hidden;
     position: relative;
+    font-family: 'Segoe UI', sans-serif;
 }
 
-/* --- DISEÑO DEL EDITOR (Torta Visual Original) --- */
-#editor-container {
-    background-color: #1c1c1c; /* Fondo del editor original */
-    border-radius: 15px;
-    padding: 20px;
-    width: 600px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+/* --- ESTILOS TORTA ANIMADA (Aparece primero) --- */
+#cake-visual {
     position: absolute;
-    z-index: 2;
-    transform: perspective(1000px) rotateY(-10deg); /* Perspectiva original */
-    
-    /* ANIMACIÓN PARA QUE APAREZCA Y LUEGO SE VAYA */
-    animation: editorSequence 8s forwards; 
+    text-align: center;
+    animation: fadeOutCake 1s forwards 5s; /* Se va después de 5 segundos */
 }
 
-@keyframes editorSequence {
-    0% { opacity: 0; transform: perspective(1000px) rotateY(-10deg) scale(0.8); visibility: visible; }
-    10% { opacity: 1; transform: perspective(1000px) rotateY(-10deg) scale(1); } /* Aparece rápido */
-    80% { opacity: 1; transform: perspective(1000px) rotateY(-10deg) scale(1); } /* Se queda 5-6s */
-    100% { opacity: 0; transform: perspective(1000px) rotateY(-10deg) scale(0.8); visibility: hidden; } /* Se va */
-}
+.cake { position: relative; width: 200px; height: 150px; margin: 0 auto; }
+.plate { width: 240px; height: 10px; background: #444; position: absolute; bottom: -5px; left: -20px; border-radius: 10px; }
+.layer { position: absolute; width: 200px; border-radius: 10px 10px 0 0; }
+.layer-bottom { height: 50px; background: #6d4c41; bottom: 0; }
+.layer-middle { height: 50px; background: #8d6e63; bottom: 50px; }
+.layer-top { height: 50px; background: #a1887f; bottom: 100px; }
+.candle { position: absolute; background: #fff; width: 10px; height: 40px; top: 70px; left: 95px; border-radius: 3px; }
+.flame { position: absolute; background: orange; width: 10px; height: 15px; border-radius: 50%; top: -20px; animation: flicker 0.5s infinite; box-shadow: 0 0 10px orange; }
 
-/* Estilos de la barra de ventana originales */
-.window-bar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-}
+@keyframes flicker { 50% { transform: scale(1.2); opacity: 0.8; } }
+.cake-text { color: #fce4ec; margin-top: 30px; font-weight: 300; }
 
-.window-buttons {
-    display: flex;
-    gap: 8px;
-}
-
-.window-buttons span {
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-}
-
-.window-buttons .red { background-color: #ff5f56; }
-.window-buttons .yellow { background-color: #ffbd2e; }
-.window-buttons .green { background-color: #27c93f; }
-
-.file-name {
-    color: #a0a0a0;
-    font-family: monospace;
-    font-size: 14px;
-}
-
-/* Estilos de línea de código originales */
-.code-line {
-    display: flex;
-    font-family: monospace;
-    font-size: 16px;
-    color: #e0e0e0;
-    line-height: 1.5; /* Espaciado original */
-}
-
-.line-number {
-    width: 30px;
-    color: #6a6a6a;
-    text-align: right;
-    margin-right: 15px;
-}
-
-/* --- COLORES DEL CÓDIGO (Originales y Vivos) --- */
-.line-code .yellow-text { color: #d4e157; }
-.line-code .blue-text { color: #81d4fa; }
-.line-code .green-text { color: #9ccc65; }
-.line-code .pink-text { color: #c2185b; }
-.line-code .orange-text { color: #ffab40; }
-
-/* --- DISEÑO DE LA CARTA (Original) --- */
+/* --- ESTILOS CARTA (Aparece después) --- */
 #letter-container {
     opacity: 0;
     visibility: hidden;
     position: absolute;
-    z-index: 1;
-    width: 100%;
-    height: 100%;
+    animation: fadeInLetter 2s forwards 5s; /* Aparece justo cuando se va la torta */
     display: flex;
     justify-content: center;
     align-items: center;
-    
-    /* ANIMACIÓN PARA QUE APAREZCA DESPUÉS DEL EDITOR */
-    animation: fadeInLetter 3s forwards 8s; 
+    width: 100%;
 }
 
 @keyframes fadeInLetter {
-    0% { opacity: 0; visibility: hidden; }
-    100% { opacity: 1; visibility: visible; }
+    to { opacity: 1; visibility: visible; }
 }
 
-/* Diseño de la carta blanca original */
+@keyframes fadeOutCake {
+    to { opacity: 0; visibility: hidden; transform: scale(0.8); }
+}
+
 .letter {
     background-color: #fff;
-    color: #333;
-    width: 90%;
-    max-width: 700px;
-    padding: 50px;
+    padding: 40px;
     border-radius: 20px;
-    box-shadow: 0 15px 50px rgba(0, 0, 0, 0.3);
-    border: 5px solid #ffccdd; /* Borde rosa original */
+    max-width: 500px;
     text-align: center;
-    position: relative;
-    z-index: 3;
+    border: 5px solid #ffccdd;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    z-index: 5;
 }
 
-/* Estilos de texto de la carta originales */
-.letter h1 {
-    color: #c2185b;
-    margin-top: 0;
-    font-size: 2.2em;
-    font-weight: 700;
-}
+.letter h1 { color: #c2185b; margin-bottom: 20px; }
+.final-message { font-weight: bold; color: #c2185b; font-size: 1.2em; }
 
-.letter p {
-    font-size: 1.1em;
-    line-height: 1.6;
-    margin-bottom: 1.2em;
-}
-
-.letter .final-message {
-    font-weight: bold;
-    font-size: 1.3em;
-    margin-top: 1.5em;
-    color: #c2185b;
-}
-
-/* --- FONDO DE CORAZONES (Original y Arreglado) --- */
-.hearts {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-    overflow: hidden;
-}
-
+/* --- LLUVIA DE CORAZONES --- */
+.hearts { position: absolute; width: 100%; height: 100%; top: 0; left: 0; }
 .heart {
-    position: absolute;
-    width: 20px;
-    height: 20px;
-    background-color: #ff3366;
-    opacity: 0.1; /* Transparencia original */
-    transform: rotate(45deg);
-    
-    /* ANIMACIÓN PARA QUE CAIGAN */
-    animation: heartFall 10s infinite;
+    position: absolute; width: 15px; height: 15px; background: #ff3366;
+    transform: rotate(45deg); opacity: 0.2; animation: fall 8s infinite;
+}
+.heart::before, .heart::after { content: ''; width: 15px; height: 15px; background: #ff3366; border-radius: 50%; position: absolute; }
+.heart::before { top: -8px; left: 0; }
+.heart::after { left: -8px; top: 0; }
+
+@keyframes fall {
+    0% { top: -10%; transform: rotate(45deg) translateX(0); }
+    100% { top: 110%; transform: rotate(45deg) translateX(50px); }
 }
 
-.heart::before, .heart::after {
-    content: '';
-    position: absolute;
-    width: 20px;
-    height: 20px;
-    background-color: #ff3366;
-    border-radius: 50%;
-}
-
-.heart::before { top: -10px; left: 0; }
-.heart::after { left: -10px; top: 0; }
-
-/* Posicionamiento aleatorio de MUCHOS corazones */
-.h1 { top: -10px; left: 10%; animation-delay: 0s; }
-.h2 { top: -10px; left: 20%; animation-delay: 2s; }
-.h3 { top: -10px; left: 30%; animation-delay: 4s; }
-.h4 { top: -10px; left: 40%; animation-delay: 6s; }
-.h5 { top: -10px; left: 50%; animation-delay: 1s; }
-.h6 { top: -10px; left: 60%; animation-delay: 3s; }
-.h7 { top: -10px; left: 70%; animation-delay: 5s; }
-.h8 { top: -10px; left: 80%; animation-delay: 7s; }
-.h9 { top: -10px; left: 90%; animation-delay: 0.5s; }
-.h10 { top: -10px; left: 15%; animation-delay: 2.5s; }
-.h11 { top: -10px; left: 25%; animation-delay: 4.5s; }
-.h12 { top: -10px; left: 35%; animation-delay: 6.5s; }
-.h13 { top: -10px; left: 45%; animation-delay: 1.5s; }
-.h14 { top: -10px; left: 55%; animation-delay: 3.5s; }
-.h15 { top: -10px; left: 65%; animation-delay: 5.5s; }
-.h16 { top: -10px; left: 75%; animation-delay: 7.5s; }
-
-/* Animación de caída original */
-@keyframes heartFall {
-    0% { transform: rotate(45deg) translateY(-20px); opacity: 0.1; }
-    50% { opacity: 0.3; } /* Un poco más visibles al caer */
-    100% { transform: rotate(45deg) translateY(100vh); opacity: 0.1; }
-}
+/* Posiciones de los corazones */
+.h1 { left: 10%; animation-delay: 0s; }
+.h2 { left: 25%; animation-delay: 2s; }
+.h3 { left: 40%; animation-delay: 4s; }
+.h4 { left: 55%; animation-delay: 1s; }
+.h5 { left: 70%; animation-delay: 3s; }
+.h6 { left: 85%; animation-delay: 5s; }
+.h7 { left: 15%; animation-delay: 6s; }
+.h8 { left: 80%; animation-delay: 7s; }
