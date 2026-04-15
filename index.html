@@ -17,193 +17,194 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            background-color: #000; /* FONDO NEGRO */
+            background-color: #000; /* Fondo negro elegante */
             color: white;
-            overflow-x: hidden;
+            overflow: hidden;
         }
 
         .main-container {
             width: 90%;
-            max-width: 800px;
+            max-width: 600px;
+            position: relative;
             display: flex;
             justify-content: center;
             align-items: center;
-            position: relative;
-            z-index: 1;
         }
 
-        .hidden-section { display: none !important; }
+        /* --- EFECTOS DE TRANSICIÓN --- */
+        .fade-out {
+            animation: fadeOut 1.5s forwards;
+        }
 
-        .active-section {
+        .fade-in {
             display: flex !important;
-            flex-direction: column;
-            align-items: center;
-            width: 100%;
-            animation: fadeIn 1s ease-in-out;
+            animation: fadeIn 1.5s forwards;
         }
 
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
 
-        /* DISEÑO DE LA TARTA */
-        .cake-card {
-            background: #fff0f5;
-            padding: 25px;
-            border-radius: 30px;
-            box-shadow: 0 15px 30px rgba(255,182,193,0.3);
+        @keyframes fadeOut {
+            from { opacity: 1; transform: scale(1); }
+            to { opacity: 0; transform: scale(1.1); }
+        }
+
+        /* --- SECCIÓN 1: LA TARTA --- */
+        #cake-section {
             display: flex;
             flex-direction: column;
             align-items: center;
+            background: #fff0f5;
+            padding: 30px;
+            border-radius: 30px;
+            box-shadow: 0 10px 30px rgba(244, 143, 177, 0.4);
             text-align: center;
+            transition: all 0.5s;
         }
 
         .bday-banner {
             background-color: #f48fb1;
             color: white;
-            padding: 8px 25px;
-            border-radius: 12px;
+            padding: 10px 30px;
+            border-radius: 15px;
             font-weight: bold;
-            font-size: 16px;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
         }
 
-        .cake-image { width: 250px; height: auto; border-radius: 15px; margin-bottom: 10px; }
-        .wish-text { font-family: 'Pacifico', cursive; color: #880e4f; font-size: 20px; }
+        .cake-image { width: 280px; height: auto; border-radius: 20px; }
+        .wish-text { font-family: 'Pacifico', cursive; color: #880e4f; font-size: 22px; margin-top: 15px; }
 
-        /* DISEÑO DE LA CARTA */
+        /* --- SECCIÓN 2: LA CARTA --- */
+        #letter-section {
+            display: none; /* Oculta al inicio */
+            flex-direction: column;
+            width: 100%;
+            opacity: 0;
+        }
+
         .letter-paper {
             background-color: #fffde7;
             border-radius: 20px;
-            padding: 30px;
-            max-width: 600px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
-            border: 5px solid #f48fb1; /* EL BORDE ROSADO */
+            padding: 35px;
+            border: 5px solid #f48fb1;
             color: #3e2723;
-            z-index: 2;
-            position: relative;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
 
-        .letter-content h1 { font-size: 24px; margin-bottom: 20px; color: #b71c1c; text-align: center; }
-        .letter-content p { margin-bottom: 15px; font-size: 16px; line-height: 1.6; }
+        .letter-content h1 { color: #b71c1c; text-align: center; margin-bottom: 20px; }
+        .letter-content p { margin-bottom: 15px; line-height: 1.6; font-size: 17px; }
 
-        /* ESTILO PARA EL MENSAJE SORPRESA */
+        /* MENSAJE FINAL SORPRESA */
         .final-message {
             font-weight: bold;
             text-align: center;
             color: #880e4f;
             margin-top: 25px;
-            font-size: 20px;
-            opacity: 0; /* Empieza invisible */
-            transform: translateY(20px);
-            transition: all 2s ease; /* Aparece suave */
+            font-size: 22px;
+            opacity: 0;
+            transition: opacity 2s ease;
         }
 
-        .visible { opacity: 1 !important; transform: translateY(0) !important; }
-
-        /* CORAZONES ANIMADOS */
-        .hearts-container {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            z-index: 0; pointer-events: none;
-        }
-
-        .heart {
-            position: absolute; font-size: 20px; top: -20px;
-            animation: rain 3s infinite linear; opacity: 0;
-        }
-
+        /* --- CORAZONES Y MÚSICA --- */
+        .hearts-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; }
+        .heart { position: absolute; font-size: 25px; animation: rain 3s infinite linear; opacity: 0; }
         @keyframes rain {
-            0% { top: -20px; opacity: 0; }
-            10% { opacity: 0.8; }
-            90% { opacity: 0.8; }
-            100% { top: 100%; opacity: 0; transform: translateX(20px); }
+            0% { top: -10%; opacity: 0; }
+            50% { opacity: 0.7; }
+            100% { top: 110%; opacity: 0; transform: translateX(30px); }
         }
 
-        /* BOTÓN DE MÚSICA */
-        #music-control {
+        #music-btn {
             position: fixed; bottom: 25px; right: 25px;
-            background-color: #f48fb1; width: 60px; height: 60px;
+            background: #f48fb1; width: 60px; height: 60px;
             border-radius: 50%; display: flex; justify-content: center;
-            align-items: center; cursor: pointer; z-index: 1000;
-            font-size: 28px; box-shadow: 0 4px 10px rgba(255,255,255,0.2);
+            align-items: center; cursor: pointer; font-size: 30px;
         }
     </style>
 </head>
 <body>
 
-    <div id="music-control" onclick="toggleMusic()">
-        <span id="music-icon">🎵</span>
-    </div>
-
-    <div id="youtube-player" style="position: absolute; visibility: hidden;"></div>
+    <div id="music-btn" onclick="toggleMusic()">🎵</div>
+    <div id="player" style="position: absolute; visibility: hidden;"></div>
 
     <div class="main-container">
-        <div id="cake-section" class="active-section">
-            <div class="cake-card">
-                <div class="bday-banner">HAPPY BIRTHDAY!</div>
-                <img src="cake.png" alt="Tarta" class="cake-image">
-                <p class="wish-text">¡Pide un deseo, Nachi! 🎂</p>
-            </div>
+        <div id="cake-section">
+            <div class="bday-banner">HAPPY BIRTHDAY!</div>
+            <img src="cake.png" alt="Tarta" class="cake-image">
+            <p class="wish-text">¡Pide un deseo, Nachi! 🎂</p>
         </div>
 
-        <div id="letter-section" class="hidden-section">
-            <div class="hearts-container">
-                <div class="heart" style="left: 10%; animation-delay: 0s;">❤️</div>
-                <div class="heart" style="left: 30%; animation-delay: 1s;">💖</div>
-                <div class="heart" style="left: 50%; animation-delay: 0.5s;">💝</div>
-                <div class="heart" style="left: 70%; animation-delay: 1.5s;">💘</div>
-                <div class="heart" style="left: 90%; animation-delay: 0.2s;">❤️</div>
-            </div>
-
+        <div id="letter-section">
+            <div class="hearts-container" id="hearts"></div>
             <div class="letter-paper">
                 <div class="letter-content">
                     <h1>¡FELIZ CUMPLEAÑOS, MARTIN! 🎂🔥</h1>
                     <p>¡Llegó tu día! Quería decirte frente a todos que me encanta el camino que estamos armando juntos. Mirar atrás y ver todo lo que hemos vivido es increíble; siento que nos conocemos de toda la vida.</p>
                     <p>Solo quiero recordarte que eres una persona maravillosa y que te quiero demasiado. Espero que hoy lo pases súper y que este nuevo año de vida venga puros éxitos.</p>
                     <p>¡De verdad espero que te vaya increíble en todo lo que venga, mi Nachi! Aquí voy a estar siempre para celebrar tus logros y apoyarte en todas.</p>
-                    
-                    <p id="mensaje-sorpresa" class="final-message">¡TE AMO MUCHO! ❤️😊✨</p>
+                    <p id="te-amo" class="final-message">¡TE AMO MUCHO! ❤️😊✨</p>
                 </div>
             </div>
         </div>
     </div>
 
     <script>
-        // Lógica de Tiempos
-        setTimeout(function() {
-            // Cambia a la carta a los 5 segundos
-            document.getElementById('cake-section').classList.add('hidden-section');
-            document.getElementById('letter-section').classList.remove('hidden-section');
-            document.getElementById('letter-section').classList.add('active-section');
+        // --- LÓGICA DE TIEMPOS ---
+        setTimeout(() => {
+            const cake = document.getElementById('cake-section');
+            const letter = document.getElementById('letter-section');
+            
+            // 1. Desvanecer tarta
+            cake.classList.add('fade-out');
+            
+            setTimeout(() => {
+                cake.style.display = 'none'; // Quitar tarta del medio
+                letter.classList.add('fade-in'); // Mostrar carta
+                crearCorazones(); // Empezar lluvia de corazones
+                
+                // 2. Mostrar el "Te amo" al final (4 segundos después de la carta)
+                setTimeout(() => {
+                    document.getElementById('te-amo').style.opacity = '1';
+                }, 4000);
 
-            // Muestra el "TE AMO MUCHO" 4 segundos después de que aparezca la carta
-            setTimeout(function() {
-                document.getElementById('mensaje-sorpresa').classList.add('visible');
-            }, 4000);
+            }, 1500); // Tiempo que dura el fade-out
+        }, 5000); // Nachi ve la tarta por 5 segundos
 
-        }, 5000);
-
-        // API de YouTube para la canción de Cuco
-        var tag = document.createElement('script');
-        tag.src = "https://www.youtube.com/iframe_api";
-        var firstScriptTag = document.getElementsByTagName('script')[0];
-        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-
-        var player;
-        function onYouTubeIframeAPIReady() {
-            player = new YT.Player('youtube-player', {
-                height: '0', width: '0',
-                videoId: 'DjribxozAQw',
-                playerVars: { 'loop': 1, 'playlist': 'DjribxozAQw' }
-            });
+        // --- CORAZONES ---
+        function crearCorazones() {
+            const container = document.getElementById('hearts');
+            const emojis = ['❤️', '💖', '💝', '💘'];
+            for(let i=0; i<15; i++) {
+                let h = document.createElement('div');
+                h.className = 'heart';
+                h.innerHTML = emojis[Math.floor(Math.random()*emojis.length)];
+                h.style.left = Math.random() * 100 + '%';
+                h.style.animationDelay = Math.random() * 2 + 's';
+                container.appendChild(h);
+            }
         }
 
+        // --- MÚSICA YOUTUBE ---
+        var tag = document.createElement('script');
+        tag.src = "https://www.youtube.com/iframe_api";
+        document.head.appendChild(tag);
+        var player;
+        function onYouTubeIframeAPIReady() {
+            player = new YT.Player('player', {
+                height: '0', width: '0', videoId: 'DjribxozAQw',
+                playerVars: { 'playlist': 'DjribxozAQw', 'loop': 1 }
+            });
+        }
         function toggleMusic() {
-            const icono = document.getElementById('music-icon');
+            const btn = document.getElementById('music-btn');
             if (player.getPlayerState() === 1) {
                 player.pauseVideo();
-                icono.innerHTML = "🎵";
+                btn.innerHTML = "🎵";
             } else {
                 player.playVideo();
-                icono.innerHTML = "🔊";
+                btn.innerHTML = "🔊";
             }
         }
     </script>
