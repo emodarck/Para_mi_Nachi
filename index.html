@@ -21,6 +21,7 @@
 
         .main-container { width: 90%; max-width: 500px; position: relative; z-index: 20; }
 
+        /* VISTA 1: TARTA */
         #cake-section {
             background: #fff0f5; padding: 30px; border-radius: 30px;
             text-align: center; display: flex; flex-direction: column; align-items: center;
@@ -30,6 +31,7 @@
         .cake-image { width: 250px; border-radius: 15px; }
         .wish-text { font-family: 'Pacifico', cursive; color: #880e4f; font-size: 20px; margin-top: 10px; }
 
+        /* VISTA 2: CARTA */
         #letter-section { display: none; width: 100%; }
         .letter-paper {
             background-color: #fffde7; border-radius: 20px; padding: 30px;
@@ -40,18 +42,18 @@
         .letter-content p { margin-bottom: 15px; line-height: 1.6; font-size: 17px; }
         .final-message { font-weight: bold; text-align: center; color: #880e4f; margin-top: 20px; font-size: 22px; opacity: 0; transition: 2s; }
 
+        /* LLUVIA DE CORAZONES */
         #hearts-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 5; pointer-events: none; }
         .heart { position: absolute; top: -50px; animation: fall linear infinite; }
         @keyframes fall { to { transform: translateY(110vh) translateX(30px); opacity: 0; } }
 
-        /* BOTÓN DE MÚSICA MEJORADO */
+        /* BOTÓN MÚSICA */
         #music-btn {
             position: fixed; bottom: 20px; right: 20px;
-            background: #f48fb1; width: 65px; height: 65px;
+            background: #f48fb1; width: 60px; height: 60px;
             border-radius: 50%; display: flex; justify-content: center;
             align-items: center; cursor: pointer; font-size: 30px;
-            z-index: 1000; box-shadow: 0 4px 15px rgba(244, 143, 177, 0.5);
-            border: none; outline: none;
+            z-index: 100; border: none;
         }
 
         .fade-out { opacity: 0; transition: opacity 1s ease; }
@@ -59,14 +61,9 @@
 </head>
 <body>
 
-    <button id="music-btn" onclick="toggleAudio()">🎵</button>
-    
-    <audio id="miAudio" loop>
-        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
-        Tu navegador no soporta audio.
-    </audio>
-
+    <button id="music-btn" onclick="toggleMusic()">🎵</button>
     <div id="hearts-container"></div>
+    <div id="player" style="position: absolute; top: -1000px;"></div>
 
     <div class="main-container">
         <div id="cake-section">
@@ -89,19 +86,7 @@
     </div>
 
     <script>
-        const audio = document.getElementById('miAudio');
-        const btn = document.getElementById('music-btn');
-
-        function toggleAudio() {
-            if (audio.paused) {
-                audio.play().catch(e => console.log("Error al reproducir:", e));
-                btn.innerHTML = "🔊";
-            } else {
-                audio.pause();
-                btn.innerHTML = "🎵";
-            }
-        }
-
+        // Lluvia de corazones
         function crearLluvia() {
             const container = document.getElementById('hearts-container');
             const emojis = ['❤️', '💖', '💝', '💘'];
@@ -110,13 +95,14 @@
                 h.className = 'heart';
                 h.innerHTML = emojis[Math.floor(Math.random() * emojis.length)];
                 h.style.left = Math.random() * 100 + 'vw';
-                h.style.animationDuration = (Math.random() * 2 + 3) + 's';
+                h.style.animationDuration = (Math.random() * 2 + 3) * 1 + 's';
                 h.style.fontSize = (Math.random() * 10 + 20) + 'px';
                 container.appendChild(h);
                 setTimeout(() => h.remove(), 5000);
             }, 300);
         }
 
+        // Transición automática
         setTimeout(() => {
             const cake = document.getElementById('cake-section');
             const letter = document.getElementById('letter-section');
@@ -125,11 +111,34 @@
                 cake.style.display = 'none';
                 letter.style.display = 'block';
                 crearLluvia();
-                setTimeout(() => {
-                    document.getElementById('te-amo').style.opacity = '1';
-                }, 3000);
+                setTimeout(() => { document.getElementById('te-amo').style.opacity = '1'; }, 3000);
             }, 1000);
         }, 5000);
+
+        // Música: Kingdom / Royalty Core
+        var tag = document.createElement('script');
+        tag.src = "https://www.youtube.com/iframe_api";
+        document.head.appendChild(tag);
+
+        var player;
+        function onYouTubeIframeAPIReady() {
+            player = new YT.Player('player', {
+                height: '0', width: '0',
+                videoId: 'Zn94qAVXeQc', // Canción estilo Kingdom/Royalty
+                playerVars: { 'playlist': 'Zn94qAVXeQc', 'loop': 1 }
+            });
+        }
+
+        function toggleMusic() {
+            const btn = document.getElementById('music-btn');
+            if (player.getPlayerState() !== 1) { 
+                player.playVideo();
+                btn.innerHTML = "🔊";
+            } else {
+                player.pauseVideo();
+                btn.innerHTML = "🎵";
+            }
+        }
     </script>
 </body>
 </html>
