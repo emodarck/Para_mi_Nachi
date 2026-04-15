@@ -15,7 +15,6 @@ body {
     position: absolute;
     text-align: center;
     animation: fadeOutCake 1s forwards 5s; /* Se va después de 5s */
-    z-index: 10; /* Asegurar que esté encima */
 }
 
 .cake {
@@ -41,41 +40,30 @@ body {
     border-radius: 10px 10px 0 0;
 }
 
+/* Colores cafe originales de la torta visual */
 .layer-bottom { height: 50px; background: #6d4c41; bottom: 0; }
 .layer-middle { height: 50px; background: #8d6e63; bottom: 50px; }
 .layer-top { height: 50px; background: #a1887f; bottom: 100px; }
 
-/* CENTRADO DE LA VELA GRANDE */
-.candle-container {
-    position: absolute;
-    width: 200px;
-    height: 150px;
-    top: 0;
-    left: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 11;
-}
-
 .candle {
+    position: absolute;
     background: #fff;
-    width: 15px; /* Más gruesa */
-    height: 60px; /* Más alta */
-    border-radius: 5px;
-    position: relative;
-    top: -20px; /* Elevar un poco */
+    width: 10px;
+    height: 40px;
+    top: 70px;
+    left: 95px;
+    border-radius: 3px;
 }
 
 .flame {
     position: absolute;
     background: orange;
-    width: 15px;
-    height: 25px;
-    border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
-    top: -30px;
+    width: 10px;
+    height: 15px;
+    border-radius: 50%;
+    top: -20px;
     animation: flicker 0.5s infinite;
-    box-shadow: 0 0 15px orange;
+    box-shadow: 0 0 10px orange;
 }
 
 @keyframes flicker {
@@ -90,7 +78,7 @@ body {
     font-weight: 300;
 }
 
-/* --- ESTILOS CARTA ORIGINAL (Aparece después) --- */
+/* --- ESTILOS CARTA (Aparece después) --- */
 #letter-container {
     opacity: 0;
     visibility: hidden;
@@ -124,7 +112,7 @@ body {
 .letter h1 { color: #c2185b; margin-bottom: 20px; }
 .final-message { font-weight: bold; color: #c2185b; font-size: 1.2em; }
 
-/* --- LLUVIA DE CORAZONES CAFE --- */
+/* --- LLUVIA DE CORAZONES --- */
 .hearts {
     position: absolute;
     width: 100%;
@@ -137,7 +125,7 @@ body {
     position: absolute;
     width: 15px;
     height: 15px;
-    background: #6d4c41; /* Corazones color café */
+    background: #ff3366; /* Corazones de lluvia originales */
     transform: rotate(45deg);
     opacity: 0.2; /* Transparencia */
     animation: fall 8s infinite;
@@ -147,7 +135,7 @@ body {
     content: '';
     width: 15px;
     height: 15px;
-    background: #6d4c41;
+    background: #ff3366;
     border-radius: 50%;
     position: absolute;
 }
