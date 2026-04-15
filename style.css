@@ -1,159 +1,148 @@
-body {
+/* --- ESTILOS GENERALES Y FUENTES --- */
+* {
+    box-sizing: border-box;
     margin: 0;
-    background-color: #121212; /* Fondo negro elegante */
+    padding: 0;
+}
+
+body {
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    overflow: hidden;
-    position: relative;
-    font-family: 'Segoe UI', sans-serif;
+    background-color: #fce4ec; /* Fondo rosa clarito de la página */
+    font-family: 'Quicksand', sans-serif; /* Fuente principal legible */
 }
 
-/* --- ESTILOS TORTA CAFE ANIMADA (0-5s) --- */
-#cake-visual {
-    position: absolute;
-    text-align: center;
-    animation: fadeOutCake 1s forwards 5s; /* Se va después de 5s */
+/* --- MARCO PRINCIPAL REDONDEADO --- */
+.main-frame {
+    width: 90%;
+    max-width: 800px;
+    background-color: #f8bbd0; /* Rosa un poco más intenso para el marco */
+    border-radius: 30px; /* Bordes redondeados grandotes */
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
 }
 
-.cake {
-    position: relative;
-    width: 200px;
-    height: 150px;
-    margin: 0 auto;
-}
-
-.plate {
-    width: 240px;
-    height: 10px;
-    background: #444;
-    position: absolute;
-    bottom: -5px;
-    left: -20px;
-    border-radius: 10px;
-}
-
-.layer {
-    position: absolute;
-    width: 200px;
-    border-radius: 10px 10px 0 0;
-}
-
-/* Colores cafe originales de la torta visual */
-.layer-bottom { height: 50px; background: #6d4c41; bottom: 0; }
-.layer-middle { height: 50px; background: #8d6e63; bottom: 50px; }
-.layer-top { height: 50px; background: #a1887f; bottom: 100px; }
-
-.candle {
-    position: absolute;
-    background: #fff;
-    width: 10px;
-    height: 40px;
-    top: 70px;
-    left: 95px;
-    border-radius: 3px;
-}
-
-.flame {
-    position: absolute;
-    background: orange;
-    width: 10px;
-    height: 15px;
-    border-radius: 50%;
-    top: -20px;
-    animation: flicker 0.5s infinite;
-    box-shadow: 0 0 10px orange;
-}
-
-@keyframes flicker {
-    0% { transform: scale(1); opacity: 1; }
-    50% { transform: scale(1.1); opacity: 0.8; }
-    100% { transform: scale(1); opacity: 1; }
-}
-
-.cake-text {
-    color: #fce4ec;
-    margin-top: 30px;
-    font-weight: 300;
-}
-
-/* --- ESTILOS CARTA (Aparece después) --- */
-#letter-container {
-    opacity: 0;
-    visibility: hidden;
-    position: absolute;
-    animation: fadeInLetter 2s forwards 5s; /* Aparece justo cuando se va la torta */
+/* --- SECCIÓN SUPERIOR DE LA TARTA --- */
+.cake-section {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 100%;
 }
 
-@keyframes fadeInLetter {
-    to { opacity: 1; visibility: visible; }
-}
-
-@keyframes fadeOutCake {
-    to { opacity: 0; visibility: hidden; transform: scale(0.8); }
-}
-
-.letter {
-    background-color: #fff;
-    padding: 40px;
+.cake-card {
+    background: white;
     border-radius: 20px;
-    max-width: 500px;
-    text-align: center;
-    border: 5px solid #ffccdd; /* Borde rosa original */
-    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-    z-index: 5;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
-.letter h1 { color: #c2185b; margin-bottom: 20px; }
-.final-message { font-weight: bold; color: #c2185b; font-size: 1.2em; }
+.bday-banner {
+    background-color: #f48fb1;
+    color: white;
+    padding: 5px 20px;
+    border-radius: 10px;
+    font-weight: bold;
+    font-size: 14px;
+    margin-bottom: 10px;
+}
 
-/* --- LLUVIA DE CORAZONES --- */
-.hearts {
+.cake-image {
+    max-width: 150px; /* Ajusta este tamaño si es necesario */
+    height: auto;
+}
+
+.wish-text {
+    font-family: 'Pacifico', cursive; /* Fuente manuscrita para este texto */
+    color: #880e4f;
+    font-size: 18px;
+    margin-top: 5px;
+}
+
+/* --- SECCIÓN INFERIOR DE LA CARTA --- */
+.letter-section {
+    position: relative; /* Necesario para que los corazones floten dentro */
+    background-color: #f8bbd0;
+    border-radius: 20px;
+    padding: 20px;
+    overflow: hidden; /* Oculta los corazones cuando salen del recuadro */
+    display: flex;
+    justify-content: center;
+}
+
+/* --- EL PAPEL DE LA CARTA --- */
+.letter-paper {
+    background-color: #fffde7; /* Color crema suave del papel */
+    border-radius: 15px;
+    padding: 25px;
+    position: relative;
+    z-index: 2; /* Pone el papel por encima de los corazones */
+    max-width: 600px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.letter-content {
+    color: #3e2723; /* Color marrón oscuro para el texto, no negro */
+    text-align: center;
+    line-height: 1.6;
+}
+
+.letter-content h1 {
+    font-size: 22px;
+    margin-bottom: 20px;
+    color: #b71c1c; /* Un rojo oscuro para el título */
+}
+
+.letter-content p {
+    margin-bottom: 15px;
+    font-size: 16px;
+}
+
+.letter-content .final-message {
+    font-weight: bold;
+    font-size: 18px;
+    margin-top: 20px;
+    margin-bottom: 0;
+}
+
+/* --- ANIMACIÓN DE LLUVIA DE CORAZONES (RÁPIDA) --- */
+.hearts-container {
     position: absolute;
-    width: 100%;
-    height: 100%;
     top: 0;
     left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1; /* Pone los corazones por detrás del papel */
 }
 
 .heart {
     position: absolute;
-    width: 15px;
-    height: 15px;
-    background: #ff3366; /* Corazones de lluvia originales */
-    transform: rotate(45deg);
-    opacity: 0.2; /* Transparencia */
-    animation: fall 8s infinite;
+    font-size: 20px;
+    opacity: 0;
+    top: -20px; /* Empiezan arriba */
+    animation: rain 2s infinite linear; /* ANIMACIÓN MÁS RÁPIDA (2 segundos) */
 }
 
-.heart::before, .heart::after {
-    content: '';
-    width: 15px;
-    height: 15px;
-    background: #ff3366;
-    border-radius: 50%;
-    position: absolute;
+@keyframes rain {
+    0% {
+        top: -20px;
+        opacity: 0;
+        transform: translateX(0) scale(1);
+    }
+    10% {
+        opacity: 0.8;
+    }
+    90% {
+        opacity: 0.8;
+    }
+    100% {
+        top: 100%; /* Llegan abajo */
+        opacity: 0;
+        transform: translateX(20px) scale(0.8); /* Se mueven un poco de lado */
+    }
 }
-
-.heart::before { top: -8px; left: 0; }
-.heart::after { left: -8px; top: 0; }
-
-@keyframes fall {
-    0% { top: -10%; transform: rotate(45deg) translateX(0); }
-    100% { top: 110%; transform: rotate(45deg) translateX(50px); }
-}
-
-/* Posiciones de los corazones */
-.h1 { left: 10%; animation-delay: 0s; }
-.h2 { left: 25%; animation-delay: 2s; }
-.h3 { left: 40%; animation-delay: 4s; }
-.h4 { left: 55%; animation-delay: 1s; }
-.h5 { left: 70%; animation-delay: 3s; }
-.h6 { left: 85%; animation-delay: 5s; }
-.h7 { left: 15%; animation-delay: 6s; }
-.h8 { left: 80%; animation-delay: 7s; }
