@@ -11,22 +11,26 @@
 </head>
 <body>
 
-    <div class="main-container">
+    <div id="music-control" onclick="toggleMusic()">
+        <span id="music-icon">🎵</span>
+    </div>
 
+    <div id="youtube-player"></div>
+
+    <div class="main-container">
         <div id="cake-section" class="active-section">
             <div class="cake-card">
                 <div class="bday-banner">HAPPY BIRTHDAY!</div>
-                
                 <img src="cake.png" alt="Tarta de cumpleaños de Nachi" class="cake-image">
-                
                 <p class="wish-text">¡Pide un deseo, Nachi! 🎂</p>
             </div>
         </div>
 
-        <div id="letter-section" class="hidden-section">
-            
+      <div id="letter-section" class="hidden-section">
+
             <div class="hearts-container">
-                <div class="heart" style="left: 10%; animation-delay: 0s;">❤️</div>
+
+                <div class="heart" style="left: 10%; animation-delay: 0s;">❤️</div
                 <div class="heart" style="left: 20%; animation-delay: 0.2s;">💖</div>
                 <div class="heart" style="left: 30%; animation-delay: 0.4s;">💝</div>
                 <div class="heart" style="left: 40%; animation-delay: 0.1s;">❤️</div>
@@ -44,39 +48,61 @@
                 <div class="heart" style="left: 75%; animation-delay: 0.6s;">❤️</div>
                 <div class="heart" style="left: 85%; animation-delay: 0.4s;">💘</div>
                 <div class="heart" style="left: 95%; animation-delay: 1s;">💝</div>
+
             </div>
 
             <div class="letter-paper">
                 <div class="letter-content">
                     <h1>¡FELIZ CUMPLEAÑOS, MARTIN! 🎂🔥</h1>
-                    
                     <p>¡Llegó tu día! Quería decirte frente a todos que me encanta el camino que estamos armando juntos. Mirar atrás y ver todo lo que hemos vivido es increíble; siento que nos conocemos de toda la vida.</p>
-                    
                     <p>Solo quiero recordarte que eres una persona maravillosa y que te quiero demasiado. Espero que hoy lo pases súper y que este nuevo año de vida venga puros éxitos.</p>
-                    
                     <p>¡De verdad espero que te vaya increíble en todo lo que venga, mi Nachi! Aquí voy a estar siempre para celebrar tus logros y apoyarte en todas.</p>
-                    
                     <p class="final-message">¡TE AMO MUCHO! ❤️😊✨</p>
                 </div>
             </div>
         </div>
-
     </div>
 
     <script>
-        // Espera 5 segundos (5000 milisegundos) y luego muestra la carta
+        // --- LÓGICA DE YOUTUBE ---
+        var tag = document.createElement('script');
+        tag.src = "https://www.youtube.com/iframe_api";
+        var firstScriptTag = document.getElementsByTagName('script')[0];
+        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+        var player;
+        function onYouTubeIframeAPIReady() {
+            player = new YT.Player('youtube-player', {
+                height: '0',
+                width: '0',
+                videoId: 'DjribxozAQw', // ID de la canción de Cuco
+                playerVars: {
+                    'autoplay': 0,
+                    'controls': 0,
+                    'loop': 1,
+                    'playlist': 'DjribxozAQw'
+                }
+            });
+        }
+
+        function toggleMusic() {
+            const icono = document.getElementById('music-icon');
+            if (player.getPlayerState() === 1) { // 1 significa que está sonando
+                player.pauseVideo();
+                icono.innerHTML = "🎵";
+            } else {
+                player.playVideo();
+                icono.innerHTML = "🔊";
+            }
+        }
+
+        // --- LÓGICA DE CAMBIO DE SECCIÓN ---
         setTimeout(function() {
             document.getElementById('cake-section').classList.remove('active-section');
             document.getElementById('cake-section').classList.add('hidden-section');
-            
             document.getElementById('letter-section').classList.remove('hidden-section');
             document.getElementById('letter-section').classList.add('active-section');
-        }, 5000); // Puedes cambiar este número (en ms) para ajustar el tiempo
+        }, 5000);
     </script>
-
 </body>
-    <audio id="miMusica" loop>
-    <source src="https://www.youtube.com/watch?v=DjribxozAQw&list=RDDjribxozAQw&start_radio=1" type="audio/mpeg">
-    Tu navegador no soporta la música.
-</audio>
 </html>
