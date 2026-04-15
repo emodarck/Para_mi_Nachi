@@ -20,7 +20,7 @@
             overflow: hidden;
         }
 
-        /* --- FONDO DE CORAZONES (SIEMPRE ACTIVO) --- */
+        /* --- FONDO DE CORAZONES --- */
         #hearts-container {
             position: fixed;
             top: 0;
@@ -41,7 +41,7 @@
             to { transform: translateY(110vh) translateX(40px); opacity: 0; }
         }
 
-        /* --- CONTENEDOR DE CONTENIDO --- */
+        /* --- CONTENEDOR PRINCIPAL --- */
         .main-container {
             width: 90%;
             max-width: 500px;
@@ -111,20 +111,21 @@
             right: 25px;
             background: #f48fb1;
             color: white;
-            width: 60px;
-            height: 60px;
+            width: 65px;
+            height: 65px;
             border-radius: 50%;
             display: flex;
             justify-content: center;
             align-items: center;
             cursor: pointer;
-            font-size: 28px;
+            font-size: 30px;
             z-index: 100;
             border: 3px solid white;
             box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            transition: all 0.3s ease;
         }
 
-        /* CLASES DE ANIMACIÓN */
+        /* ESTADOS DE ANIMACIÓN */
         .visible { display: block !important; opacity: 1 !important; transform: scale(1) !important; }
         .hidden { opacity: 0 !important; transform: scale(1.1) !important; pointer-events: none; }
     </style>
@@ -132,10 +133,11 @@
 <body>
 
     <div id="hearts-container"></div>
+    
     <div id="music-btn" onclick="toggleMusic()">🎵</div>
 
-    <audio id="bg-audio" loop>
-        <source src="https://www.chosic.com/wp-content/uploads/2021/07/The-Epic-Hero-Epic-Cinematic-Music.mp3" type="audio/mpeg">
+    <audio id="bg-audio" loop preload="auto">
+        <source src="https://www.chosic.com/wp-content/uploads/2021/05/Enchanted-Festival.mp3" type="audio/mpeg">
     </audio>
 
     <div class="main-container">
@@ -150,8 +152,8 @@
                 <div class="letter-content">
                     <h1>¡FELIZ CUMPLEAÑOS, MARTIN! 🎂🔥</h1>
                     <p>¡Llegó tu día! Quería decirte que me encanta el camino que estamos armando juntos. Mirar atrás y ver todo lo que hemos vivido es increíble.</p>
-                    <p>Solo quiero recordarte que eres una persona maravillosa y que te quiero demasiado. Espero que hoy lo pases súper.</p>
-                    <p>¡De verdad espero que te vaya increíble en todo lo que venga, mi Nachi! Aquí voy a estar siempre para celebrar tus logros.</p>
+                    <p>Solo quiero recordarte que eres una persona maravillosa y que te quiero demasiado. Espero que hoy lo pases súper y que este nuevo año venga lleno de éxitos.</p>
+                    <p>¡Aquí voy a estar siempre para apoyar a mi rey en todo! Te mereces lo mejor del mundo hoy y siempre.</p>
                     <p id="te-amo" class="final-message">¡TE AMO MUCHO! ❤️😊✨</p>
                 </div>
             </div>
@@ -159,7 +161,7 @@
     </div>
 
     <script>
-        // 1. LLUVIA DE CORAZONES (Inicia de inmediato)
+        // 1. LLUVIA DE CORAZONES
         function crearCorazones() {
             const container = document.getElementById('hearts-container');
             const emojis = ['❤️', '💖', '💝', '💘'];
@@ -177,7 +179,7 @@
         }
         crearCorazones();
 
-        // 2. MÚSICA
+        // 2. LÓGICA DE MÚSICA
         const audio = document.getElementById('bg-audio');
         const btn = document.getElementById('music-btn');
 
@@ -185,33 +187,30 @@
             if (audio.paused) {
                 audio.play();
                 btn.innerHTML = "🔊";
-                btn.style.background = "#4CAF50"; // Cambia a verde cuando suena
+                btn.style.background = "#4CAF50"; // Verde = Sonando
             } else {
                 audio.pause();
                 btn.innerHTML = "🎵";
-                btn.style.background = "#f48fb1";
+                btn.style.background = "#f48fb1"; // Rosa = Pausa
             }
         }
 
-        // 3. TRANSICIÓN DE TARTA A CARTA
+        // 3. TRANSICIÓN AUTOMÁTICA
         setTimeout(() => {
             const cake = document.getElementById('cake-section');
             const letter = document.getElementById('letter-section');
             
-            // Ocultar tarta
             cake.classList.add('hidden');
             
             setTimeout(() => {
                 cake.style.display = 'none';
-                // Mostrar carta
                 letter.classList.add('visible');
                 
-                // Mostrar "Te amo" al final
                 setTimeout(() => {
                     document.getElementById('te-amo').style.opacity = '1';
                 }, 3000);
-            }, 1500); // Tiempo de la animación de salida
-        }, 5000); // 5 segundos viendo la tarta
+            }, 1500);
+        }, 5000);
     </script>
 </body>
 </html>
