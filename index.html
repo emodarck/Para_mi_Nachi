@@ -180,37 +180,34 @@
         crearCorazones();
 
         // 2. LÓGICA DE MÚSICA
-        const audio = document.getElementById('bg-audio');
-        const btn = document.getElementById('music-btn');
+       <audio id="bg-audio" loop preload="auto" crossorigin="anonymous">
+    <source src="https://www.chosic.com/wp-content/uploads/2021/05/Enchanted-Festival.mp3" type="audio/mpeg">
+</audio>
 
-        function toggleMusic() {
-            if (audio.paused) {
-                audio.play();
+<script>
+    const audio = document.getElementById('bg-audio');
+    const btn = document.getElementById('music-btn');
+
+    function toggleMusic() {
+        // Esto "fuerza" al navegador a despertar el sonido
+        if (audio.paused) {
+            audio.play().then(() => {
                 btn.innerHTML = "🔊";
-                btn.style.background = "#4CAF50"; // Verde = Sonando
-            } else {
-                audio.pause();
-                btn.innerHTML = "🎵";
-                btn.style.background = "#f48fb1"; // Rosa = Pausa
-            }
+                btn.style.background = "#4CAF50";
+            }).catch(error => {
+                console.log("El celu bloqueó el audio:", error);
+                // Si falla, intentamos recargar el audio y tocar de nuevo
+                audio.load();
+                audio.play();
+            });
+        } else {
+            audio.pause();
+            btn.innerHTML = "🎵";
+            btn.style.background = "#f48fb1";
         }
-
-        // 3. TRANSICIÓN AUTOMÁTICA
-        setTimeout(() => {
-            const cake = document.getElementById('cake-section');
-            const letter = document.getElementById('letter-section');
-            
-            cake.classList.add('hidden');
-            
-            setTimeout(() => {
-                cake.style.display = 'none';
-                letter.classList.add('visible');
-                
-                setTimeout(() => {
-                    document.getElementById('te-amo').style.opacity = '1';
-                }, 3000);
-            }, 1500);
-        }, 5000);
+    }
+    
+    // El resto de tus funciones (crearCorazones, etc.) se quedan igual
     </script>
 </body>
 </html>
