@@ -20,7 +20,7 @@
             overflow: hidden;
         }
 
-        /* --- FONDO DE CORAZONES --- */
+        /* FONDO DE CORAZONES */
         #hearts-container {
             position: fixed;
             top: 0;
@@ -41,7 +41,7 @@
             to { transform: translateY(110vh) translateX(40px); opacity: 0; }
         }
 
-        /* --- CONTENEDOR PRINCIPAL --- */
+        /* CONTENEDOR PRINCIPAL */
         .main-container {
             width: 90%;
             max-width: 500px;
@@ -71,7 +71,7 @@
             margin-bottom: 15px;
         }
 
-        .cake-image { width: 250px; border-radius: 15px; }
+        .cake-image { width: 200px; border-radius: 15px; }
         .wish-text { font-family: 'Pacifico', cursive; color: #880e4f; font-size: 20px; margin-top: 10px; }
 
         /* VISTA 2: CARTA */
@@ -85,21 +85,21 @@
         .letter-paper {
             background-color: #fffde7;
             border-radius: 20px;
-            padding: 30px;
+            padding: 25px;
             border: 5px solid #f48fb1;
             color: #3e2723;
             box-shadow: 0 10px 40px rgba(0,0,0,0.8);
         }
 
-        .letter-content h1 { color: #b71c1c; text-align: center; margin-bottom: 20px; }
-        .letter-content p { margin-bottom: 15px; line-height: 1.6; font-size: 17px; }
+        .letter-content h1 { color: #b71c1c; text-align: center; margin-bottom: 15px; font-size: 24px; }
+        .letter-content p { margin-bottom: 12px; line-height: 1.5; font-size: 16px; }
 
         .final-message {
             font-weight: bold;
             text-align: center;
             color: #880e4f;
-            margin-top: 20px;
-            font-size: 22px;
+            margin-top: 15px;
+            font-size: 20px;
             opacity: 0;
             transition: opacity 2s ease;
         }
@@ -107,25 +107,24 @@
         /* BOTÓN DE MÚSICA */
         #music-btn {
             position: fixed;
-            bottom: 25px;
-            right: 25px;
+            bottom: 20px;
+            right: 20px;
             background: #f48fb1;
             color: white;
-            width: 65px;
-            height: 65px;
+            width: 60px;
+            height: 60px;
             border-radius: 50%;
             display: flex;
             justify-content: center;
             align-items: center;
             cursor: pointer;
-            font-size: 30px;
+            font-size: 28px;
             z-index: 100;
             border: 3px solid white;
             box-shadow: 0 4px 15px rgba(0,0,0,0.3);
             transition: all 0.3s ease;
         }
 
-        /* ESTADOS DE ANIMACIÓN */
         .visible { display: block !important; opacity: 1 !important; transform: scale(1) !important; }
         .hidden { opacity: 0 !important; transform: scale(1.1) !important; pointer-events: none; }
     </style>
@@ -133,10 +132,9 @@
 <body>
 
     <div id="hearts-container"></div>
-    
     <div id="music-btn" onclick="toggleMusic()">🎵</div>
 
-    <audio id="bg-audio" loop preload="auto">
+    <audio id="bg-audio" loop preload="auto" crossorigin="anonymous">
         <source src="https://www.chosic.com/wp-content/uploads/2021/05/Enchanted-Festival.mp3" type="audio/mpeg">
     </audio>
 
@@ -179,35 +177,45 @@
         }
         crearCorazones();
 
-        // 2. LÓGICA DE MÚSICA
-       <audio id="bg-audio" loop preload="auto" crossorigin="anonymous">
-    <source src="https://www.chosic.com/wp-content/uploads/2021/05/Enchanted-Festival.mp3" type="audio/mpeg">
-</audio>
+        // 2. LÓGICA DE MÚSICA (COMPATIBLE CON CELULAR)
+        const audio = document.getElementById('bg-audio');
+        const btn = document.getElementById('music-btn');
 
-<script>
-    const audio = document.getElementById('bg-audio');
-    const btn = document.getElementById('music-btn');
-
-    function toggleMusic() {
-        // Esto "fuerza" al navegador a despertar el sonido
-        if (audio.paused) {
-            audio.play().then(() => {
-                btn.innerHTML = "🔊";
-                btn.style.background = "#4CAF50";
-            }).catch(error => {
-                console.log("El celu bloqueó el audio:", error);
-                // Si falla, intentamos recargar el audio y tocar de nuevo
-                audio.load();
-                audio.play();
-            });
-        } else {
-            audio.pause();
-            btn.innerHTML = "🎵";
-            btn.style.background = "#f48fb1";
+        function toggleMusic() {
+            if (audio.paused) {
+                // El .play() devuelve una promesa para confirmar que el navegador aceptó el sonido
+                audio.play().then(() => {
+                    btn.innerHTML = "🔊";
+                    btn.style.background = "#4CAF50";
+                }).catch(e => {
+                    console.log("Error de audio:", e);
+                    // Intento secundario para celulares rebeldes
+                    audio.load();
+                    audio.play();
+                });
+            } else {
+                audio.pause();
+                btn.innerHTML = "🎵";
+                btn.style.background = "#f48fb1";
+            }
         }
-    }
-    
-    // El resto de tus funciones (crearCorazones, etc.) se quedan igual
+
+        // 3. TRANSICIÓN AUTOMÁTICA
+        setTimeout(() => {
+            const cake = document.getElementById('cake-section');
+            const letter = document.getElementById('letter-section');
+            
+            cake.classList.add('hidden');
+            
+            setTimeout(() => {
+                cake.style.display = 'none';
+                letter.classList.add('visible');
+                
+                setTimeout(() => {
+                    document.getElementById('te-amo').style.opacity = '1';
+                }, 2000);
+            }, 1500);
+        }, 5000);
     </script>
 </body>
 </html>
